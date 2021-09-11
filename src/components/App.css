@@ -1,0 +1,730 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@300&display=swap');
+
+:root {
+    --primary-grey: #f6f6f6;
+    --primary-dark-grey: rgb(131, 131, 131);
+    --primary-orange: #fa5400;
+}
+
+*{
+    margin: 0;
+    font-family: 'Lato','Montserrat', sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+.auth-bar{
+    width: 100%;
+    height: 2.5rem;
+    background-color: var(--primary-grey);
+}
+.nav-bar {
+    width: 100%;
+    height: 4rem;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.infos-covid {
+    width: 100%;
+    height: 4rem;
+    background-color: var(--primary-grey);
+    border-bottom: 1px solid #e1dfdf;
+}
+.infos-utils {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 35px;
+    font-size: 15px;
+}
+
+.infos-utils div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    height: 2.5rem;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.infos-utils div:first-child {
+    width: 5rem;
+}
+
+.infos-utils div:hover {
+    background-color: white;
+}
+
+.items-center {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-self: center;
+}
+
+.items-center div {
+    height: 4rem;
+    width: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: .8rem;
+    cursor: pointer;
+}
+
+.items-center div:hover {
+    border-bottom: 2px solid black;
+}
+
+.item-left {
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: italic;
+    font-family: 'Abril Fatface';
+    margin-left: 40px;
+    width: 8%;
+    text-align: center;
+    margin-right: 12%;
+    cursor: pointer;
+}
+
+.items-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 50px;
+}
+
+.searchBox {
+    background-color: var(--primary-grey);
+    margin-right: 20px;
+}
+
+.items-right div #outlined-search {
+    height: .2rem;
+}
+
+.items-right-icon .icon-favorites {
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.items-right .icon-bag {
+    cursor: pointer;
+}
+
+.icon-favorites:hover, .icon-bag:hover {
+    border-radius: 50%;
+    padding: 5px;
+    background-color: var(--primary-grey);
+}
+
+.covid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 14px;
+}
+
+.covid div {
+    margin-right: 10rem;
+}
+
+.covid div a {
+    color: black;
+}
+
+.covid div:last-child {
+    margin-right: 0px;
+}
+
+.covid .icon{
+    color: var(--primary-dark-grey);
+    cursor: pointer;
+    height: 25px;
+    padding: 2px;
+    border-radius: 50%;
+}
+
+.covid .icon:hover {
+    color: black;
+}
+
+.covid-content {
+    text-align: center;
+}
+
+/**************************************/
+
+.app-content {
+    height: 100%;
+}
+
+.content-header {
+    height: 5rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    margin-left: 50px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.header-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 25px;
+}
+
+.header-right-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    text-indent: 5px;
+    cursor: pointer;
+}
+
+.right-icon {
+    margin-top: 4px;
+}
+
+/***************/
+.content-body {
+    display: flex;
+    justify-content: start;
+    padding-left: 50px;
+    padding-right: 30px;
+    flex-wrap: wrap;
+    height: 100%;
+    /* background-color: red; */
+}
+
+.loading-product {
+    height: 18.75rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#circular-progress {
+    margin-right: 20px;
+    color: var(--primary-orange);
+}
+
+.product-card {
+    height: fit-content;
+    width: 30rem;
+    margin-right: 20px;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+
+.link {
+    color: var(--primary-dark-grey);
+}
+
+.link:hover {
+    color: black;
+}
+
+.link-bag {
+    color: black;
+}
+
+.product-card .product-img {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.product-img img {
+    max-height: 100%;
+    width: 100%;
+    height: auto;
+}
+
+#category, #category1, #product_name, #couleur {
+    margin-bottom: 5px;
+}
+
+.product-details #category {
+    color: var(--primary-orange);
+}
+
+.product-details #category1, #couleur {
+    color: #757575;
+}
+
+.product-details #couleur {
+    margin-bottom: 10px;
+}
+
+.content-footer {
+    height: 15rem;
+    width: 100%;
+    position: absolute;
+    bottom: 1;
+    background-color: black;
+    color: white;
+    font-size: 13px;
+}
+
+.content-footer-top {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 70%;
+    margin-bottom: 10px;
+}
+
+.footer-box {
+    height: 15rem;
+    width: 93.5%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-box-left {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-box-left div {
+    margin-right: 5rem;
+    height: 10rem;
+}
+
+.footer-box-left div p {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.footer-box-left div:first-child,
+#uppercase {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.footer-box-left div:last-child,
+.footer-box-right div:last-child {
+    margin-right: 0px;
+}
+
+.left-item2:first-child, .left-item3:first-child {
+    text-transform: uppercase;
+}
+
+#grey-color, .social-media {
+    color: var(--primary-dark-grey);
+}
+
+.footer-box-right {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
+}
+
+.footer-box-right div {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.social-media:hover,
+#grey-color:hover,
+.utils p:hover,
+.second-utils-right p:hover {
+    color: white;
+}
+
+.divider {
+    width: 95%;
+    height: 1px;
+    margin-left: 2.5%;
+    background-color: gainsboro;
+    opacity: 0.2;
+    margin-bottom: 10px;
+}
+
+.utils {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 50px;
+    color:var(--primary-dark-grey);
+    margin-bottom: 15px;
+}
+
+.utils p {
+    font-size: 12px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.utils p:last-child {
+    margin-right: 0px;
+}
+
+.second-utils {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    width: 93.7%;
+    margin-left: 3.2%;
+    color: var(--primary-dark-grey);
+}
+
+.second-utils-left, .second-utils-right {
+    display: flex;
+    width: 50%;
+}
+
+.second-utils-left {
+    justify-content: flex-start;
+}
+
+.second-utils-right {
+    justify-content: flex-end;
+    cursor: pointer;
+
+}
+
+.second-utils-left p, .second-utils-right p {
+    margin-right: 22px;
+}
+
+.second-utils-left p:last-child, .second-utils-right p:last-child {
+    margin-right: 0px;
+}
+
+.second-utils-left p:last-child, .second-utils-right p:last-child {
+    margin-right: 0px;
+}
+
+/* */
+
+.login-container, .login-form {
+    width: 100%;
+    
+}
+
+.login-form {
+    color: var(--primary-dark-grey);
+    text-align: center;
+}
+
+.login-header {
+    text-align: center;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+#message1 {
+    font-size: 15px;
+    color: var(--primary-dark-grey);
+}
+
+#message {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#sneakers {
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: italic;
+    font-family: 'Abril Fatface';
+    margin-bottom: 10px;
+}
+
+.login-form div {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5px;
+}
+
+#email, #password {
+    height: .2rem;
+}
+
+#button {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: black;
+    color: white;
+    box-shadow: none;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+#forgot-password {
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+#another {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.login-container a {
+    color: var(--primary-dark-grey);
+}
+
+.login-form:last-child {
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+#register {
+    color: black;
+}
+
+.gender {
+    width: 86%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    color: var(--primary-dark-grey);
+}
+
+/* Shopping Cart */
+.container {
+    display: flex;
+    justify-content: center;
+    padding-left: 50px;
+    padding-right: 30px;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.back-to-home {
+    display: flex;
+    justify-content: space-between;
+    height: fit-content;
+    width: fit-content;
+    font-weight: bold;
+    color: var(--primary-dark-grey);
+}
+
+.back-to-home:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.container-details-products {
+    width: 45%;
+    height: fit-content;
+    /* background-color: red; */
+    margin-right: 20px;
+}
+
+.container-details {
+    width: 25%;
+    padding: 0px 20px 20px 20px;
+}
+
+.container-details-products .infos-livraison {
+    border: 1px solid gainsboro;
+    padding: 10px;
+    text-align: justify;
+    height: fit-content;
+    margin-bottom: 10px;
+}
+
+.container-details-products .infos-livraison h3 {
+    margin-bottom: 5px;
+    color: var(--primary-orange);
+}
+
+/**/
+.cart-product-details {
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-product-details .img {
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.cart-product-details .img img {
+    margin-right: 30px;
+    min-height: 80%;
+    cursor: pointer;
+}
+
+.details {
+    padding-top: 10px;
+}
+
+.cart-options a, .details {
+    color: var(--primary-dark-grey);
+}
+
+.cart-product-details .img .details p {
+    margin-bottom: 10px;   
+}
+
+.cart-product-details .img .details div {
+    display: flex;
+    justify-content: space-between;
+}
+
+#size {
+    margin-right: 10px;
+}
+
+.cart-product-details .img .details .margin-bottom {
+    margin-bottom: 20px;
+}
+
+.time-out {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #c5af06;
+}
+
+.container-details h2 {
+    margin-bottom: 20px;
+}
+
+.container-details div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+#payment {
+    width: 100%;
+    border-radius: 40px;
+    background-color: black;
+    box-shadow: none;
+    height: 4rem;
+    color: white;
+    font-weight: bold;
+}
+
+#payment:hover {
+    opacity: 0.8;
+}
+
+/* PAYMENT */
+.payment-container {
+    height: fit-content;
+    width: 100%;
+}
+
+.payment-left-container {
+    height: fit-content;
+    width: 100%;
+}
+
+.left-container {
+    width: 100%;
+    height: 100%;
+}
+
+.left-container-padding {
+    padding: 0px 20px 20px 20px;
+}
+
+.payment-left-container h4 {
+    height: fit-content;
+    padding: 10px;
+    background-color: black;
+    color: white;
+}
+
+#customized-dialog-title div {
+    width: 100%;
+    text-align: center;
+}
+
+#customized-dialog-title h3 {
+    font-family: 'Abril Fatface';
+    width: 100%;
+}
+
+.payment-left-container .flex-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.payment-container .flex-box .flex-box-item {
+    width: 100%;
+    margin-right: 20px;
+}
+
+.payment-container .flex-box .flex-box-item:last-child {
+    margin-right: 0px;
+}
+
+.payment-container .normal-box {
+    margin-bottom: 20px;
+}
+
+.payment-container .normal-box .normal-box-item {
+    width: 100%;
+}
+
+.flex-end-box {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.flex-end-box .flex-end-box-item {
+    background-color: var(--primary-orange);
+    box-shadow: none;
+    color: white;
+    height: 2.5rem;
+    font-weight: bold;
+}
+
+.flex-end-box .flex-end-box-item:hover {
+    background-color: var(--primary-orange);
+    opacity: 0.8;
+    box-shadow: none;
+    color: white;
+    height: 2.5rem;
+    font-weight: bold;
+}
+
+.infos-comp {
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    color: var(--primary-dark-grey);
+}
