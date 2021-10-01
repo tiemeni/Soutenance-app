@@ -6,6 +6,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import CloseIcon from '@material-ui/icons/Close';
+import { useSelector } from 'react-redux';
 
 const styles = (theme) => ({
     root: {
@@ -48,6 +49,7 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 export default function Auth({ open, setOpen }) {
+    const userDetails = useSelector(state => state.user);
 
     const handleClose = () => {
         setOpen(false);
@@ -71,8 +73,9 @@ export default function Auth({ open, setOpen }) {
                                                 className="flex-box-item"
                                                 id="password"
                                                 placeholder="Nom"
-                                                type="password"
+                                                type="text"
                                                 variant='outlined'
+                                                value={userDetails.last_name}
                                             />
                                         </div>
                                         <div className="flex-box-item">
@@ -82,6 +85,7 @@ export default function Auth({ open, setOpen }) {
                                                 placeholder="Prénom"
                                                 type="text"
                                                 variant='outlined'
+                                                value={userDetails.first_name}
                                             />
                                         </div>
                                     </div>
@@ -92,6 +96,7 @@ export default function Auth({ open, setOpen }) {
                                             placeholder="Adresse"
                                             type="text"
                                             variant='outlined'
+                                            value={userDetails.adresse}
                                         />
                                     </div>
                                     <div className="flex-box">
@@ -100,8 +105,9 @@ export default function Auth({ open, setOpen }) {
                                                 className="flex-box-item"
                                                 id="password"
                                                 placeholder="Email"
-                                                type="password"
+                                                type="email"
                                                 variant='outlined'
+                                                value={userDetails.email_address}
                                             />
                                         </div>
                                         <div className="flex-box-item">
@@ -111,6 +117,7 @@ export default function Auth({ open, setOpen }) {
                                                 placeholder="Numéro de téléphone"
                                                 type="text"
                                                 variant='outlined'
+                                                value={userDetails.phone_number}
                                             />
                                         </div>
                                     </div><br />

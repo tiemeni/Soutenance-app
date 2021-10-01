@@ -5,36 +5,20 @@ import Payment from '../Payment/Payment';
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem/CartItem';
 import RecapCart from './CartItem/RecapCart';
-import { useSelector, useDispatch } from 'react-redux';
-import { storeCart } from '../../actions';
+import { useSelector } from 'react-redux';
 
-const ShoppingCart = ({ setHome }) => {
+
+const ShoppingCart = ({ total }) => {
     const [open, setOpen] = useState(false);
     const cartDetails = useSelector(state => state.cart);
-    const [total, setTotal] = useState();
-    const dispatch = useDispatch();
 
-    useEffect(() => {
-        try {
-            const fetchProducts = async () => {
-                const results = await fetch('http://localhost:4000/api/cart');
-                const result = await results.json();
-
-                dispatch(storeCart(result.data.items));
-                setTotal(result.data.subTotal);
-            }
-
-            fetchProducts();
-        } catch (err) {
-            console.log(err);
-        }
-    }, [])
-
+    console.log("Panier: ", cartDetails);
+    
     return (
         <div className="container">
             <div className="container-details-products"><br />
                 <div className="back-to-home">
-                    <Link className="link" to="/"><ArrowBackIosOutlined style={{ marginRight: "20px" }} /></Link>
+                    <Link className="link" to="/"><ArrowBackIosOutlined style={{ marginRight: "20px" }} /></Link>Retour
                 </div>
                 <br /><br />
                 <div className="infos-livraison">
@@ -42,8 +26,9 @@ const ShoppingCart = ({ setHome }) => {
                     <p>Devenez Membre SNKRS pour profiter de livraisons rapides et gratuites.</p>
                 </div>
                 <h2 style={{ marginBottom: "20px" }}>Panier</h2>
-                {cartDetails.map((detail) => <CartItem detail={detail} />)}
-                <br/>
+                {cartDetails.length <= 0 && <div class="empty-cart"><h4>Vous n'avez encore aucun produit dans votre panier...</h4></div>}
+                {cartDetails.length > 0 && cartDetails.map((detail) => <CartItem detail={detail} />)}
+                <br />
                 <div className="time-out">
                     <Timer style={{ marginRight: "20px" }} />
                     <p>Plus que quelques exemplaires disponibles. Commandez vite.</p>

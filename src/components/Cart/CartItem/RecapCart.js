@@ -2,7 +2,7 @@ import React from 'react';
 import {Divider, Button} from '@material-ui/core';
 
 const RecapCart = ({subTotal, setOpen}) => {
-    const fraisLiv = 5000;
+    const fraisLiv = 0;
 
     return (
         <div className="container-details">
@@ -19,7 +19,7 @@ const RecapCart = ({subTotal, setOpen}) => {
             <Divider style={{ marginBottom: "10px" }} />
             <div>
                 <p>Total</p>
-                <p style={{ fontWeight: "bold" }} >{subTotal + fraisLiv} XAF</p>
+                <p style={{ fontWeight: "bold" }} >{subTotal} XAF</p>
             </div>
             <Divider style={{ marginBottom: "10px" }} /><br />
             <Button id="payment" variant="contained" onClick={() => setOpen(true)}>Paiement</Button>

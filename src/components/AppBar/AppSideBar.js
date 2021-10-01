@@ -1,30 +1,47 @@
-import React, { useState } from 'react';
-import { Badge, InputAdornment, TextField } from '@material-ui/core';
+import React, { useRef, useState } from 'react';
+import { Badge, Collapse, InputAdornment, Snackbar, TextField } from '@material-ui/core';
 import { ArrowBackIosOutlined, ArrowForwardIosOutlined, FavoriteBorderOutlined, LocalMallOutlined, SearchOutlined } from '@material-ui/icons';
 import Auth from '../Auth/AuthDialog';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
-const AppSideBar = () => {
+const AppSideBar = ({setIsLogged}) => {
     const cartDetails = useSelector(state => state.cart);
+    const userDetails = useSelector(state => state.user);
+    const [loggedIn, setLoggedIn] = useState(true);
     const [open, setOpen] = useState(false);
+    const timer = useRef();
+
     const handleClickOpen = () => {
         setOpen(true);
     };
 
+    const handleClose = () => {
+        setLoggedIn(false);
+    }
+
     return (
         <div className="appbar">
+            {userDetails.length != 0 &&
+                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={loggedIn} autoHideDuration={5000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success">
+                        <AlertTitle>Connecté avec succès</AlertTitle>
+                        {userDetails.first_name}, Bienvenue.
+                    </Alert>
+                </Snackbar>
+            }
             <div className="auth-bar">
                 <div className="infos-utils">
                     <div> Aide </div>
                     <div> Rejoignez-nous </div>
-                    <div onClick={handleClickOpen}> S'identifier </div>
+                    <div onClick={handleClickOpen}>{userDetails.length == 0 ? "S'identifier" : "Se déconnecter"}  </div>
                 </div>
             </div>
             <div className="nav-bar">
                 <div className="item-left">SNKRS</div>
                 <div className="items-center">
-                    <div>Nouveautés</div>
+                    <div><Link to='/' id="home">Accueil</Link></div>
                     <div>Hommes</div>
                     <div>Femmes</div>
                     <div>Enfants</div>
@@ -64,7 +81,7 @@ const AppSideBar = () => {
                     <div className="icon"><ArrowForwardIosOutlined /></div>
                 </div>
             </div>
-            <Auth setOpen={setOpen} open={open} />
+            <Auth setOpen={setOpen} open={open} setIsLogged={setIsLogged} />
 
         </div>
     )

@@ -50,7 +50,7 @@ const DialogActions = withStyles((theme) => ({
     },
 }))(MuiDialogActions);
 
-export default function Auth({open, setOpen}) {
+export default function Auth({open, setOpen, setIsLogged}) {
     const [login, setLogin] = useState(true);
     const [register, setRegister] = useState(false);
 
@@ -66,8 +66,8 @@ export default function Auth({open, setOpen}) {
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                 </DialogTitle>
                 <DialogContent>
-                    {login==true && <Login setLogin={setLogin} setRegister={setRegister} />}
-                    {register && <Register setLogin={setLogin} setRegister={setRegister} /> }
+                    {login==true && <Login setLogin={setLogin} setRegister={setRegister} setOpen={setOpen} setIsLogged={setIsLogged} />}
+                    {register && <Register setLogin={setLogin} setRegister={setRegister} setOpen={setOpen} setIsLogged={setIsLogged} /> }
                 </DialogContent>
             </Dialog>
         </div>
