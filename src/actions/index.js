@@ -6,6 +6,12 @@ export const storeUser = (user) => {
     };
 }
 // Products
+export const storeProduct = (products) => {
+    return {
+        type: 'STORE_PRODUCT',
+        payload: products
+    };
+}
 // Cart
 export const storeCart = (cart) => {
     return {

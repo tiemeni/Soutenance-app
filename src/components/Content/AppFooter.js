@@ -47,11 +47,11 @@ const Footer = () => {
                 <div className="second-utils">
                     <div className="second-utils-left">
                         <p>France</p>
-                        <p>2021 Snkrs, Inc. Tout droit réservés</p>
+                        <p id="date">2021 Snkrs, Inc. Tout droit réservés</p>
                     </div>
                     <div className="second-utils-right">
                         <p>Politiques en matière de confidentialité et de cookies</p>
-                        <p>Paramètres des cookies</p>
+                        <p id="cookie">Paramètres des cookies</p>
                     </div>
                     <div></div>
                 </div>

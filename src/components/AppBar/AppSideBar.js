@@ -1,16 +1,15 @@
 import React, { useRef, useState } from 'react';
-import { Badge, Collapse, InputAdornment, Snackbar, TextField } from '@material-ui/core';
+import { Badge, Collapse, InputAdornment, Slide, Snackbar, TextField } from '@material-ui/core';
 import { ArrowBackIosOutlined, ArrowForwardIosOutlined, FavoriteBorderOutlined, LocalMallOutlined, SearchOutlined } from '@material-ui/icons';
 import Auth from '../Auth/AuthDialog';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
-const AppSideBar = ({setIsLogged}) => {
+const AppSideBar = ({ setIsLogged, setOpen, open }) => {
     const cartDetails = useSelector(state => state.cart);
     const userDetails = useSelector(state => state.user);
     const [loggedIn, setLoggedIn] = useState(true);
-    const [open, setOpen] = useState(false);
     const timer = useRef();
 
     const handleClickOpen = () => {
@@ -24,10 +23,10 @@ const AppSideBar = ({setIsLogged}) => {
     return (
         <div className="appbar">
             {userDetails.length != 0 &&
-                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={loggedIn} autoHideDuration={5000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="success">
+                <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}  open={loggedIn} autoHideDuration={5000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                         <AlertTitle>Connecté avec succès</AlertTitle>
-                        {userDetails.first_name}, Bienvenue.
+                        <strong>{userDetails.first_name}</strong>, Bienvenue.
                     </Alert>
                 </Snackbar>
             }
@@ -42,9 +41,12 @@ const AppSideBar = ({setIsLogged}) => {
                 <div className="item-left">SNKRS</div>
                 <div className="items-center">
                     <div><Link to='/' id="home">Accueil</Link></div>
-                    <div>Hommes</div>
+                    <div><Link to='/' id="home">Hommes</Link></div>
+                    <div><Link to='/' id="home">Femmes</Link></div>
+                    <div><Link to='/' id="home">Enfans</Link></div>
+                    {/* <div>Hommes</div>
                     <div>Femmes</div>
-                    <div>Enfants</div>
+                    <div>Enfants</div> */}
                     <div>Promotions</div>
                     <div>Collections</div>
                 </div>
@@ -65,7 +67,7 @@ const AppSideBar = ({setIsLogged}) => {
                         />
                     </div>
                     <div className="items-right-icon">
-                        <Badge badgeContent={2} className="icon-favorites" variant="dot" color="primary">
+                        <Badge badgeContent={2} className="icon-favorites" variant="dot" color="secondary-light">
                             <FavoriteBorderOutlined />
                         </Badge>
                         <Badge badgeContent={cartDetails.length} className="icon-bag" color="secondary">

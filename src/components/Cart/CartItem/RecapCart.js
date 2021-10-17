@@ -1,8 +1,10 @@
 import React from 'react';
 import {Divider, Button} from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 const RecapCart = ({subTotal, setOpen}) => {
     const fraisLiv = 0;
+    const cartDetails = useSelector(state => state.cart);
 
     return (
         <div className="container-details">
@@ -22,7 +24,7 @@ const RecapCart = ({subTotal, setOpen}) => {
                 <p style={{ fontWeight: "bold" }} >{subTotal} XAF</p>
             </div>
             <Divider style={{ marginBottom: "10px" }} /><br />
-            <Button id="payment" variant="contained" onClick={() => setOpen(true)}>Paiement</Button>
+            <Button id="payment" variant="contained" onClick={() => setOpen(true)} disabled={cartDetails.length <= 0 ? true : false}>Paiement</Button>
         </div>
     )
 }

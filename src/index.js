@@ -5,6 +5,24 @@ import './components/App.css';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducers from './reducers';
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#000000" // This is an orange looking color
+    },
+    secondary: {
+      main: '#f44336',
+    },
+  },
+  typography: {
+    fontFamily: [
+      'Lato',
+      'Montserrat',
+    ].join(','),
+  },
+});
 
 let store = createStore(
   reducers,
@@ -12,8 +30,10 @@ let store = createStore(
 );
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ThemeProvider >,
   document.getElementById('root')
 );

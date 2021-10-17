@@ -35,6 +35,10 @@ html, body {
     width: 100%;
 }
 
+.appbar {
+    width: 100%;
+}
+
 .auth-bar{
     width: 100%;
     height: 2.5rem;
@@ -188,7 +192,7 @@ html, body {
 
 /**************************************/
 
-.app, .app-content {
+.app, .app-header, .app-content {
     height: 100%;
     width: 100%;
 }
@@ -235,11 +239,12 @@ html, body {
     padding-right: 30px;
     flex-wrap: wrap;
     height: 100%;
-    /* background-color: red; */
+    width: 95%;
+    /* background-color: yellow; */
 }
 
 .loading-product {
-    height: 18.75rem;
+    height: 40rem;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -260,6 +265,31 @@ html, body {
     cursor: pointer;
 }
 
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+
 .link {
     color: var(--primary-dark-grey);
 }
@@ -277,6 +307,11 @@ html, body {
     height: 32.5rem;
     margin-bottom: 10px;
     background-color: var(--primary-grey);
+    animation: fadeIn linear 1s;
+    -webkit-animation: fadeIn linear 1s;
+    -moz-animation: fadeIn linear 1s;
+    -o-animation: fadeIn linear 1s;
+    -ms-animation: fadeIn linear 1s;
 }
 
 .product-img img {
@@ -615,18 +650,31 @@ html, body {
     height: fit-content;
     width: fit-content;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     background-color: white;
 }
 
+.small_image {
+    /* background-color: yellow; */
+    width: 30%;
+}
+
 .cart-product-details .img img {
-    margin-right: 30px;
-    min-height: 80%;
+    max-width: 100%;
+    max-height: 80%;
+    /* margin-right: 30px; */
+    /* min-height: 80%; */
     cursor: pointer;
+    animation: fadeIn linear 1s;
+    -webkit-animation: fadeIn linear 1s;
+    -moz-animation: fadeIn linear 1s;
+    -o-animation: fadeIn linear 1s;
+    -ms-animation: fadeIn linear 1s;
 }
 
 .details {
     padding-top: 10px;
+    /* background-color: red; */
 }
 
 .cart-options a, .details {
@@ -681,6 +729,10 @@ html, body {
     opacity: 0.8;
 }
 
+#payment:disabled {
+    opacity: 0.5;
+}
+
 /* PAYMENT */
 .payment-container {
     height: fit-content;
@@ -727,14 +779,51 @@ html, body {
 .payment-container .flex-box .flex-box-item {
     width: 100%;
     margin-right: 20px;
+    font-family: 'Lato','Montserrat', sans-serif;
 }
 
 .payment-container .flex-box .flex-box-item:last-child {
     margin-right: 0px;
 }
 
+.input-mask-div {
+    margin-right: 10px;
+}
+
+.input-mask {
+    height: 2.2rem;
+    font-size: 16px;
+    width: 92%;
+    border: 1px solid rgb(192, 192, 192);
+    border-radius: 3px;
+    padding-left: 15px;
+}
+
+.input-mask:hover {
+    border: 1px solid rgb(192, 192, 192);
+}
+
+::placeholder {
+    opacity: .7;
+  }
+
 .payment-container .normal-box {
     margin-bottom: 20px;
+}
+
+.payment-box {
+    border: 1px solid rgb(192, 192, 192);
+    height: 25px;
+    border-radius: 5px;
+    padding: 10px 0px 0px 15px;
+}
+
+.payment-box:hover {
+    border-color: black;
+}
+
+.payment-box:focus {
+    background-color: red;
 }
 
 .payment-container .normal-box .normal-box-item {
@@ -809,6 +898,11 @@ html, body {
     width: 100%;
     height: 100%;
     margin: auto;
+    animation: fadeIn linear 1s;
+    -webkit-animation: fadeIn linear 1s;
+    -moz-animation: fadeIn linear 1s;
+    -o-animation: fadeIn linear 1s;
+    -ms-animation: fadeIn linear 1s;
 }
 
 .button-div {
@@ -876,3 +970,104 @@ html, body {
     margin-bottom: 10px;
     cursor: pointer;
 }
+
+/* Responsive */
+@media only screen and (max-width: 760px) {
+    .appbar,
+    .nav-bar,
+    .infos-covid, 
+    .covid,
+    .content-header {
+        width: 100%;
+    }
+    .auth-bar, .items-center, .searchBox, .infos-covid .icon {
+        display: none;
+    }
+    .items-right {
+        margin-right: 20px;
+    }
+    .item-left {
+        margin-left: 20px;
+    }
+    .infos-covid, .covid {
+        height: 6rem;
+        text-align: center;
+    }
+    .covid div {
+        margin-right: 0;
+    }
+
+    /* content */
+    .header-left {
+        margin-left: 20px;
+        font-size: 18px;
+    }
+    .header-right {
+        margin-right: 0;
+    }
+    .header-right-item {
+        display: none;
+    }
+
+    .filter {
+        display: flex;
+    }
+
+    /* footer */
+    .content-footer {
+        width: 100%;
+        height: fit-content;
+    }
+    /* .left-item2, .left-item3 {
+        display: none;
+    } */
+    .second-utils {
+        width: 40rem;
+    }
+    .second-utils, 
+    .second-utils-left, 
+    .second-utils-right, 
+    .utils,
+    .footer-box  {
+        display: block;
+    }
+    .utils {
+        margin-left: 3.5%;
+    }
+    .second-utils-left p, .second-utils-right p, .utils p {
+        margin-bottom: 10px;
+        width: 100%;
+        font-size: 14px;
+    }
+    #date, #cookie {
+        margin-bottom: 20px;
+    }
+
+    .footer-box {
+        padding-top: 10px;
+    }
+
+    .footer-box-right {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    /* produits */
+    .product-card {
+        /* background-color: red; */
+        width: 100%;
+        margin-bottom: 20px;
+        margin-right: 0;
+    }
+
+    .content-body {
+        justify-content: space-between;
+        padding-right: 20px;
+        padding-left: 20px;
+        width: 94.6%;
+    }
+
+    .product-card .product-img {
+        height: 21rem;
+    }
+  }

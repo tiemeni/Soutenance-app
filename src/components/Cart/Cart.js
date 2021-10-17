@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom';
 import CartItem from './CartItem/CartItem';
 import RecapCart from './CartItem/RecapCart';
 import { useSelector } from 'react-redux';
+import StripeContainer from '../Payment/StripeContainer';
 
 
-const ShoppingCart = ({ total }) => {
+const ShoppingCart = ({ total, success, setSuccess, fetchProducts, cartId }) => {
     const [open, setOpen] = useState(false);
     const cartDetails = useSelector(state => state.cart);
 
@@ -27,7 +28,7 @@ const ShoppingCart = ({ total }) => {
                 </div>
                 <h2 style={{ marginBottom: "20px" }}>Panier</h2>
                 {cartDetails.length <= 0 && <div class="empty-cart"><h4>Vous n'avez encore aucun produit dans votre panier...</h4></div>}
-                {cartDetails.length > 0 && cartDetails.map((detail) => <CartItem detail={detail} />)}
+                {cartDetails.length > 0 && cartDetails.map((detail) => <CartItem detail={detail} fetchProducts={fetchProducts} />)}
                 <br />
                 <div className="time-out">
                     <Timer style={{ marginRight: "20px" }} />
@@ -35,7 +36,7 @@ const ShoppingCart = ({ total }) => {
                 </div><br /><br />
             </div>
             <RecapCart subTotal={total} setOpen={setOpen} />
-            <Payment setOpen={setOpen} open={open} />
+            <StripeContainer subTotal={total} setOpen={setOpen} open={open} success={success} setSuccess={setSuccess} cartId={cartId} fetchProducts={fetchProducts} />
         </div>
     )
 }

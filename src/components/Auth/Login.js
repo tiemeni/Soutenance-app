@@ -85,7 +85,7 @@ const Login = ({ setLogin, setRegister, setOpen, setIsLogged }) => {
                     <p>En vous connectant, vous acceptez de vous conformer à la <a href="#">Politique de confidentialité</a> et aux <a href='#'>Conditions générales</a> de SNKRS.</p>
                 </div>
                 <Button id="button" type="submit" disabled={!email || password.length < 8 ? true : false} autoFocus variant="contained" onClick={(e) => { login(e) }}>
-                    {isLoading ? <CircularProgress size={20} /> : "Connexion"}
+                    {isLoading ? <CircularProgress style={{ color: "white" }} size={20} /> : "Connexion"}
                 </Button>
                 <p>Vous n'êtes pas encore membre ?
                     <a id="register" href="#" onClick={() => {

@@ -10,8 +10,8 @@ const AppHeader = () => {
                     <div>Afficher les filtres</div>
                     <div className="right-icon"><SortOutlined /></div>
                 </div>
-                <div className="header-right-item">
-                    <div>Trier par</div>
+                <div className="header-right-item filter">
+                    <div>Trier</div>
                     <div className="right-icon"><ExpandMoreOutlined /></div>
                 </div>
             </div>

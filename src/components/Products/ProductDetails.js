@@ -4,9 +4,10 @@ import { ExpandLess, ExpandMore, FavoriteBorderOutlined, Star, StarBorder } from
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { storeCart } from '../../actions';
+import Products from './Products';
 
 const ProductDetails = ({ fetchProducts }) => {
-    const [open, setOpen] = useState(false);
+    const [openLiv, setOpenLiv] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
     const [openAvis, setOpenAvis] = useState(false);
     const userInfos = useSelector(state => state.user);
@@ -24,7 +25,7 @@ const ProductDetails = ({ fetchProducts }) => {
     }
 
     const handleClick = () => {
-        setOpen(!open);
+        setOpenLiv(!openLiv);
     };
 
     const handleClose = () => {
@@ -33,30 +34,22 @@ const ProductDetails = ({ fetchProducts }) => {
 
     const addToCart = async () => {
         setIsClicked(true);
-        if (userInfos.length !== 0) {
-            try {
-                const results = await fetch("http://localhost:4000/api/cart", {
-                    method: "POST",
-                    headers: myHeader,
-                    body: JSON.stringify({
-                        id_produit: productId,
-                        qte_produit: 1
-                    })
-                });
-                const data = await results.json();
-                timer.current = window.setTimeout(() => {
-                    setIsClicked(false);
-                    fetchProducts();
-                }, 500)
-            } catch (err) {
-                console.log(err);
-            }
-        } else {
+        try {
+            const results = await fetch("http://localhost:4000/api/cart", {
+                method: "POST",
+                headers: myHeader,
+                body: JSON.stringify({
+                    id_produit: productId,
+                    qte_produit: 1
+                })
+            });
+            const data = await results.json();
             timer.current = window.setTimeout(() => {
                 setIsClicked(false);
-                setOpenDialog(true);
-                console.log("Vous devez être connecté pour disposer d'un panier");
-            }, 600)
+                fetchProducts();
+            }, 500)
+        } catch (err) {
+            console.log(err);
         }
     }
 
@@ -89,22 +82,22 @@ const ProductDetails = ({ fetchProducts }) => {
                 <div className="details-produit">
                     <div className="image-produit">
                         <div className="image-item" style={{ marginRight: "15px" }}>
-                            <img src="https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/1632439a-15ca-4213-842e-4e8b062a6c86/chaussure-air-max-97-pour-CV3dl7.png" alt="nike" />
+                            <img src={product.description_img1} alt="nike" />
                         </div>
                         <div className="image-item">
-                            <img src="https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/0063cf9f-a84b-4630-8a18-3750802f2a75/chaussure-air-max-97-pour-CV3dl7.png" alt="nike air" />
+                            <img src={product.description_img2} alt="nike air" />
                         </div>
                         <div className="image-item" style={{ marginRight: "15px" }}>
-                            <img src="https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/5470c589-41f0-4adb-82b2-e818275e2ed7/chaussure-air-max-97-pour-CV3dl7.png" alt="nike" />
+                            <img src={product.description_img3} alt="nike" />
                         </div>
                         <div className="image-item">
-                            <img src="https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/e603ef60-5103-4e60-9751-cfc970d977bd/chaussure-air-max-97-pour-CV3dl7.png" alt="nike air" />
+                            <img src={product.description_img4} alt="nike air" />
                         </div>
                         <div className="image-item" style={{ marginRight: "15px" }}>
-                            <img src="https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/263cd3cf-53d1-41b6-8c21-4fc81aa5c227/chaussure-air-max-97-pour-CV3dl7.png" alt="nike" />
+                            <img src={product.description_img5} alt="nike" />
                         </div>
                         <div className="image-item">
-                            <img src="https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/d67a06c6-3ae3-4144-9e59-0e02941f6e58/chaussure-air-max-97-pour-CV3dl7.png" alt="nike air" />
+                            <img src={product.description_img6} alt="nike air" />
                         </div>
                     </div>
                     <div className="infos-produit">
@@ -112,16 +105,16 @@ const ProductDetails = ({ fetchProducts }) => {
                         <h1 id="product_name">{product.nom_produit}</h1>
                         <p style={{ marginBottom: "50px" }}>{product.prix_unitaire} XAF</p>
                         <div className="button-div">
-                            <Button id="payment" className="panier" variant="contained" onClick={addToCart} >{isClicked ? <CircularProgress size={20} /> : "Ajouter au panier"}</Button>
-                            <Button id="add-favorite" variant="contained" endIcon={<FavoriteBorderOutlined />} >Ajouter au favoris</Button>
+                            <Button id="payment" className="panier" variant="contained" onClick={addToCart} >{isClicked ? <CircularProgress style={{ color: "white" }} size={20} /> : "Ajouter au panier"}</Button>
+                            <Button id="add-favorite" variant="contained" onClick={() => { setOpenDialog(true) }} endIcon={<FavoriteBorderOutlined />} >Ajouter au favoris</Button>
                             <p id="details-description">Inspirée des trains à grande vitesse japonais, la Nike Air Max 97 affiche un style fulgurant qui en met plein la vue.Elle reprend l'unité Nike Air révolutionnaire sur toute la longueur qui a bousculé le monde du running, et ajoute un coloris argenté pour vous permettre d'évoluer dans le plus grand confort.</p>
                             <Divider />
                             <List>
                                 <ListItem id="list-item-button" onClick={handleClick}>
                                     <ListItemText primary={<h3 id="list-item-text">Livraisons et retours gratuits</h3>} />
-                                    {open ? <ExpandLess /> : <ExpandMore />}
+                                    {openLiv ? <ExpandLess /> : <ExpandMore />}
                                 </ListItem>
-                                <Collapse id="livraison-gratuite" in={open} timeout="auto" unmountOnExit>
+                                <Collapse id="livraison-gratuite" in={openLiv} timeout="auto" unmountOnExit>
                                     <p>Livraison standard gratuite avec l'Adhésion Nike.</p>
                                     <ul>
                                         <li>La livraison sera plus longue que d'habitude. Vérifiez la date de livraison estimée lors du paiement.</li>
@@ -157,7 +150,7 @@ const ProductDetails = ({ fetchProducts }) => {
                     <DialogTitle>{"IMPORTANT"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-slide-description">
-                            Vous devez disposer d'un compte membre afin de continuer sur notre site.
+                            Vous devez disposer d'un <strong>Compte Membre</strong> afin de disposer d'un espace de <strong>favoris</strong>.
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
