@@ -5,13 +5,18 @@ const CartItem = ({ detail, fetchProducts }) => {
     const { _id, image_url, nom_produit, description, couleur_dispo, taille_dispo } = detail.id_produit;
     const [isClicked, setIsClicked] = useState(false);
     const [size, setSize] = useState(taille_dispo);
+    const [qty, setQty] = useState(detail.qte_produit);
 
     console.log("taille: ", size);
 
     // console.log(detail);
 
-    const handleChange = (event) => {
+    const handleChangeSize = (event) => {
         setSize(event.target.value);
+    };
+
+    const handleChangeQty = (event) => {
+        setQty(event.target.value);
     };
 
     const removeItem = async (e) => {
@@ -48,13 +53,13 @@ const CartItem = ({ detail, fetchProducts }) => {
                         <div className="margin-bottom">
                             <p id="size">Taille/Pointure : {taille_dispo}</p>
                             {/* <p id="size" style={{ "display": "flex", "alignItems": "center" }} >
-                                <InputLabel id="demo-simple-select-label">{"Taille/Pointure: "}</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Taille/Pointure: </InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
                                     value={size}
                                     label={size}
-                                    onChange={handleChange}
+                                    onChange={handleChangeSize}
                                 >
                                     <MenuItem value={43}>43</MenuItem>
                                     <MenuItem value={42}>42</MenuItem>
@@ -62,19 +67,19 @@ const CartItem = ({ detail, fetchProducts }) => {
                                     <MenuItem value={40}>40</MenuItem>
                                 </Select>
                             </p> */}
-                            {/* <p id="qty" style={{ "display": "flex", "alignItems": "center" }} >
-                                <InputLabel id="demo-simple-select-label">{"Quantité: "}  </InputLabel>
+                            {/* <p id="size" style={{ "display": "flex", "alignItems": "center" }} >
+                                <InputLabel id="demo-simple-select-label">Quantité: {" "} </InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={size}
-                                    label={size}
-                                    onChange={handleChange}
+                                    value={qty}
+                                    label={qty}
+                                    onChange={handleChangeQty}
                                 >
-                                    <MenuItem value={1}>1</MenuItem>
-                                    <MenuItem value={2}>2</MenuItem>
-                                    <MenuItem value={3}>3</MenuItem>
-                                    <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={43}>43</MenuItem>
+                                    <MenuItem value={42}>42</MenuItem>
+                                    <MenuItem value={41}>41</MenuItem>
+                                    <MenuItem value={40}>40</MenuItem>
                                 </Select>
                             </p> */}
                             <p id="qty">Quantité : {detail.qte_produit}</p>

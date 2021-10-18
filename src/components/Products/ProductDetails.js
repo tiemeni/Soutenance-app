@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, CircularProgress, Collapse, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, List, ListItem, ListItemText } from '@material-ui/core';
+import { Button, CircularProgress, Collapse, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, List, ListItem, ListItemText, Snackbar } from '@material-ui/core';
 import { ExpandLess, ExpandMore, FavoriteBorderOutlined, Star, StarBorder } from '@material-ui/icons';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import { storeCart } from '../../actions';
 import Products from './Products';
 
@@ -15,6 +16,9 @@ const ProductDetails = ({ fetchProducts }) => {
     const [product, setProduct] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [isClicked, setIsClicked] = useState(false);
+    const [size, setSize] = useState();
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
     const dispatch = useDispatch();
     const timer = useRef();
     const array = [0, 1, 2, 3, 4];
@@ -29,27 +33,46 @@ const ProductDetails = ({ fetchProducts }) => {
     };
 
     const handleClose = () => {
+        setSuccess(false);
         setOpenDialog(false);
     }
 
+    const chooseSize = (e) => {
+        setSize(43);
+        if (e.target.className == "active") {
+            e.target.className = "size-c";
+        } else {
+            e.target.className = "active";
+        }
+    }
+
+    console.log("Taille: ", size);
+
     const addToCart = async () => {
         setIsClicked(true);
-        try {
-            const results = await fetch("http://localhost:4000/api/cart", {
-                method: "POST",
-                headers: myHeader,
-                body: JSON.stringify({
-                    id_produit: productId,
-                    qte_produit: 1
-                })
-            });
-            const data = await results.json();
-            timer.current = window.setTimeout(() => {
-                setIsClicked(false);
-                fetchProducts();
-            }, 500)
-        } catch (err) {
-            console.log(err);
+        if (size == undefined) {
+            setError(true);
+            setIsClicked(false);
+        } else {
+            setError(false);
+            try {
+                const results = await fetch("http://localhost:4000/api/cart", {
+                    method: "POST",
+                    headers: myHeader,
+                    body: JSON.stringify({
+                        id_produit: productId,
+                        qte_produit: 1
+                    })
+                });
+                const data = await results.json();
+                timer.current = window.setTimeout(() => {
+                    setIsClicked(false);
+                    setSuccess(true);
+                    fetchProducts();
+                }, 500)
+            } catch (err) {
+                console.log(err);
+            }
         }
     }
 
@@ -63,8 +86,8 @@ const ProductDetails = ({ fetchProducts }) => {
                 timer.current = window.setTimeout(() => {
                     setIsLoading(false);
                 }, 200);
-            } catch (error) {
-                console.log(error);
+            } catch (err) {
+                console.log(err);
             }
         }
 
@@ -80,34 +103,57 @@ const ProductDetails = ({ fetchProducts }) => {
                 </div>
                 :
                 <div className="details-produit">
+                    <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} open={success} autoHideDuration={8000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity="success">
+                            <AlertTitle>Succès</AlertTitle>
+                            La <strong>{product.nom_produit}</strong> a été ajouté à votre panier.
+                        </Alert>
+                    </Snackbar>
                     <div className="image-produit">
                         <div className="image-item" style={{ marginRight: "15px" }}>
                             <img src={product.description_img1} alt="nike" />
                         </div>
                         <div className="image-item">
-                            <img src={product.description_img2} alt="nike air" />
+                            <img src={product.description_img2} />
                         </div>
                         <div className="image-item" style={{ marginRight: "15px" }}>
-                            <img src={product.description_img3} alt="nike" />
+                            <img src={product.description_img3} />
                         </div>
                         <div className="image-item">
-                            <img src={product.description_img4} alt="nike air" />
+                            <img src={product.description_img4} />
                         </div>
                         <div className="image-item" style={{ marginRight: "15px" }}>
-                            <img src={product.description_img5} alt="nike" />
+                            <img src={product.description_img5} />
                         </div>
                         <div className="image-item">
-                            <img src={product.description_img6} alt="nike air" />
+                            <img src={product.description_img6} />
                         </div>
                     </div>
                     <div className="infos-produit">
-                        <p id="category">{product.description}</p>
-                        <h1 id="product_name">{product.nom_produit}</h1>
-                        <p style={{ marginBottom: "50px" }}>{product.prix_unitaire} XAF</p>
+                        <p id="category" className="category">{product.description}</p>
+                        <h1 id="product_name" className="product_name">{product.nom_produit}</h1>
+                        <p id="prix-s" style={{ marginBottom: "50px" }}>{product.prix_unitaire} XAF</p>
                         <div className="button-div">
-                            <Button id="payment" className="panier" variant="contained" onClick={addToCart} >{isClicked ? <CircularProgress style={{ color: "white" }} size={20} /> : "Ajouter au panier"}</Button>
+                            <h4>Taille: </h4>
+                            {error && <p style={{ "color": "red", "marginTop": "5px" }}>Vous devez choisir une taille pour continuer.</p>}
+                            <div className="choose-size">
+                                <div className="size-c" onClick={chooseSize}>45</div>
+                                <div className="size-c" onClick={chooseSize}>44</div>
+                                <div className="size-c" onClick={chooseSize}>43.5</div>
+                                <div className="size-c" onClick={chooseSize}>43</div>
+                                <div className="size-c" onClick={chooseSize}>42</div>
+                                <div className="size-c" onClick={chooseSize}>41</div>
+                                <div className="size-c" onClick={chooseSize}>40.5</div>
+                                <div className="size-c" onClick={chooseSize}>40</div>
+                                <div className="size-c" onClick={chooseSize}>39</div>
+                                <div className="size-c" onClick={chooseSize}>38.5</div>
+                                <div className="size-c" onClick={chooseSize}>37</div>
+                            </div>
+                            <Button id="payment" className="panier" variant="contained" onClick={addToCart} >
+                                {isClicked ? <CircularProgress style={{ color: "white" }} size={20} /> : "Ajouter au panier"}
+                            </Button>
                             <Button id="add-favorite" variant="contained" onClick={() => { setOpenDialog(true) }} endIcon={<FavoriteBorderOutlined />} >Ajouter au favoris</Button>
-                            <p id="details-description">Inspirée des trains à grande vitesse japonais, la Nike Air Max 97 affiche un style fulgurant qui en met plein la vue.Elle reprend l'unité Nike Air révolutionnaire sur toute la longueur qui a bousculé le monde du running, et ajoute un coloris argenté pour vous permettre d'évoluer dans le plus grand confort.</p>
+                            <p id="details-description">Inspirée des trains à grande vitesse japonais, la {product.nom_produit} affiche un style fulgurant qui en met plein la vue.Elle reprend l'unité Nike Air révolutionnaire sur toute la longueur qui a bousculé le monde du running, et ajoute un coloris argenté pour vous permettre d'évoluer dans le plus grand confort.</p>
                             <Divider />
                             <List>
                                 <ListItem id="list-item-button" onClick={handleClick}>

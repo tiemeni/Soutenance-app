@@ -124,14 +124,15 @@ export default function Payment({ open, setOpen, subTotal, fetchProducts, cartId
 
         if (!error) {
             try {
-                const { id, email } = paymentMethod;
+                const { id } = paymentMethod;
+                console.log("email facture: ", emailAddress);
                 const response = await fetch("http://localhost:4000/api/cart/payment", {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         amount: subTotal,
                         id: id,
-                        user_email: email,
+                        user_email: emailAddress,
                         cart_id: cartId
                     })
                 })

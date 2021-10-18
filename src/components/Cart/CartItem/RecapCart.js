@@ -24,7 +24,7 @@ const RecapCart = ({subTotal, setOpen}) => {
                 <p style={{ fontWeight: "bold" }} >{subTotal} XAF</p>
             </div>
             <Divider style={{ marginBottom: "10px" }} /><br />
-            <Button id="payment" variant="contained" onClick={() => setOpen(true)} disabled={cartDetails.length <= 0 ? true : false}>Paiement</Button>
+            <Button id="secondPayment" variant="contained" onClick={() => setOpen(true)} disabled={cartDetails.length <= 0 ? true : false}>Paiement</Button>
         </div>
     )
 }

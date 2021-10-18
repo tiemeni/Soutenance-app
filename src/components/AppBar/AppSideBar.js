@@ -3,18 +3,27 @@ import { Badge, Collapse, InputAdornment, Slide, Snackbar, TextField } from '@ma
 import { ArrowBackIosOutlined, ArrowForwardIosOutlined, FavoriteBorderOutlined, LocalMallOutlined, SearchOutlined } from '@material-ui/icons';
 import Auth from '../Auth/AuthDialog';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import { storeProduct } from '../../actions';
 
 const AppSideBar = ({ setIsLogged, setOpen, open }) => {
     const cartDetails = useSelector(state => state.cart);
     const userDetails = useSelector(state => state.user);
+    const products = useSelector(state => state.product);
+    const dispatch = useDispatch();
     const [loggedIn, setLoggedIn] = useState(true);
     const timer = useRef();
 
     const handleClickOpen = () => {
         setOpen(true);
     };
+
+    const sortBy = (e) => {
+        e.preventDefault();
+        const results = products.filter(product => product.description == "Chaussure de basketball");
+        dispatch(storeProduct(results));
+    }
 
     const handleClose = () => {
         setLoggedIn(false);
@@ -41,7 +50,7 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
                 <div className="item-left">SNKRS</div>
                 <div className="items-center">
                     <div><Link to='/' id="home">Accueil</Link></div>
-                    <div><Link to='/' id="home">Hommes</Link></div>
+                    <div><Link to='/' id="home" onClick={sortBy}>Hommes</Link></div>
                     <div><Link to='/' id="home">Femmes</Link></div>
                     <div><Link to='/' id="home">Enfans</Link></div>
                     {/* <div>Hommes</div>

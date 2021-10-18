@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Product from './product/Product';
 import { CircularProgress } from '@material-ui/core';
+import { storeProduct } from '../../actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Products = () => {
-    const [products, setProducts] = useState([]);
+    const products = useSelector(state => state.product);
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const timer = useRef();
 
@@ -13,9 +16,9 @@ const Products = () => {
             const fetchProducts = async () => {
                 const results = await fetch('http://localhost:4000/api/products');
                 const data = await results.json();
-                setProducts(data);
                 timer.current = window.setTimeout(() => {
                     setIsLoading(false);
+                    dispatch(storeProduct(data));
                 }, 200);
             }
 

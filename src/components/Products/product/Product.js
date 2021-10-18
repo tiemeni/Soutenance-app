@@ -6,7 +6,7 @@ const Product = ({ product }) => {
         <Link to={'/product/' + product._id} style = {{ textDecoration: "none" }} >
             <div className="product-card">
                 <div className="product-img">
-                    <img className="skeleton" src={product.image_url} alt="Nike" />
+                    <img className="skeleton" src={product.image_url} />
                 </div>
                 <div className="product-details">
                     <p id="category">{product.category}</p>
