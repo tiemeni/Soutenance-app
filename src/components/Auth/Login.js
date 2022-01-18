@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { TextField, Button, CircularProgress, Collapse } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { storeUser } from '../../actions';
+import { setActualUser, storeUser } from '../../actions';
 import { useDispatch } from 'react-redux';
 
 
@@ -32,12 +32,13 @@ const Login = ({ setLogin, setRegister, setOpen, setIsLogged }) => {
             const results = await fetch("http://localhost:4000/api/users/login", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
+                credentials : 'include',
                 body: JSON.stringify({
                     email_address: email,
                     password: password
                 })
             });
-            if (results.status != 201) {
+            if (results.status !== 201) {
                 timer.current = window.setTimeout(() => {
                     setIsLoading(false);
                     setIncorrect(true);
@@ -45,12 +46,13 @@ const Login = ({ setLogin, setRegister, setOpen, setIsLogged }) => {
                 }, 1000);
             }
 
-            if (results.status == 201) {
+            if (results.status === 201) {
                 const data = await results.json();
                 timer.current = window.setTimeout(() => {
                     setIsLoading(false);
                     setOpen(false);
                     dispatch(storeUser(data));
+                    dispatch(setActualUser(data))
                     setIsLogged(true);
                 }, 500)
             }

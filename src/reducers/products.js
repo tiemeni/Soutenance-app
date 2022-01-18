@@ -8,3 +8,10 @@ const productReducer = (state = [], action) => {
 }
 
 export default productReducer;
+
+
+
+//case 'SHOW_FOR_HOMME':
+  //  return state = true
+//case 'STORE_HOMME_PRODUCT':
+  //  return state = action.payload;

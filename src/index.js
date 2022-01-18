@@ -5,9 +5,9 @@ import './components/App.css';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducers from './reducers';
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { createTheme, ThemeProvider } from "@material-ui/core";
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: "#000000" // This is an orange looking color

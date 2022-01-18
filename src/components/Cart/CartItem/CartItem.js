@@ -91,7 +91,7 @@ const CartItem = ({ detail, fetchProducts }) => {
                     </div>
                 </div>
                 <div className="details">
-                    <p style={{ color: "black" }}>{detail.total} XAF</p>
+                    <p style={{ color: "black" }}>{detail.total} Fcfa</p>
                 </div>
             </div><br />
             <Divider /><br />

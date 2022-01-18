@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import AppSideBar from './AppBar/AppSideBar';
+import { setActualUser, storeUser } from '../actions/'
 import ShoppingCart from './Cart/Cart';
 import Footer from './Content/AppFooter';
 import AppContent from './Content/AppContent';
@@ -27,6 +28,14 @@ function App() {
             'Content-Type': 'application/json',
             'x-access-token': userInfos.token
         }
+        fetch('http://localhost:4000/jwt', {
+            credentials: 'include'
+        })
+            .then(data => data.json())
+            .then(user => {
+                dispatch(setActualUser(user))
+            })
+            .catch(err => console.log(err))
 
         const results = await fetch('http://localhost:4000/api/cart', {
             headers: myHeader,
@@ -47,14 +56,11 @@ function App() {
         try {
             const results = await fetch('http://localhost:4000/api/products');
             const data = await results.json();
-            dispatch(storeProduct(data));
+            //dispatch(storeProduct(data));
         } catch (err) {
             console.log(err);
         }
     }
-
-    console.log("userToken: ", userInfos.token);
-    console.log("isLogged: ", isLogged);
 
     useEffect(() => {
         try {
