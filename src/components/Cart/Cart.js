@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Divider } from '@material-ui/core';
+import React, { useState } from 'react';
 import { Timer, ArrowBackIosOutlined } from '@material-ui/icons';
-import Payment from '../Payment/Payment';
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem/CartItem';
 import RecapCart from './CartItem/RecapCart';
@@ -11,9 +9,7 @@ import StripeContainer from '../Payment/StripeContainer';
 
 const ShoppingCart = ({ total, success, setSuccess, fetchProducts, cartId }) => {
     const [open, setOpen] = useState(false);
-    const cartDetails = useSelector(state => state.cart);
-
-    console.log("Panier: ", cartDetails);
+    const panel = useSelector(state => state.userPanel)
 
     return (
         <div className="container">
@@ -23,7 +19,7 @@ const ShoppingCart = ({ total, success, setSuccess, fetchProducts, cartId }) => 
                     className="back-to-home">
                     <Link
                         className="link" to="/">
-                        <div style={{display : "flex"}}>
+                        <div style={{ display: "flex" }}>
                             <ArrowBackIosOutlined style={{ marginRight: "20px" }} />
                             <p>Retour</p>
                         </div>
@@ -44,16 +40,15 @@ const ShoppingCart = ({ total, success, setSuccess, fetchProducts, cartId }) => 
                     style={{ marginBottom: "20px" }}>
                     Panier
                 </h2>
-                {cartDetails.length <= 0 && <div
+                {panel.length <= 0 && <div
                     className="empty-cart">
                     <h4>
                         Vous n'avez encore aucun produit dans votre panier...
                     </h4>
                 </div>}
-                {cartDetails.length > 0 && cartDetails.map((detail, id) => <CartItem
+                {panel.length > 0 && panel.map((detail, id) => <CartItem
                     detail={detail}
-                    key = {id}
-                    fetchProducts={fetchProducts}
+                    key={id}
                 />)}
                 <br />
                 <div

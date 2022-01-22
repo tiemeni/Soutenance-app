@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { SortOutlined, ExpandMoreOutlined } from '@material-ui/icons';
+import React from 'react';
 import { useSelector } from 'react-redux'
 
 const AppHeader = () => {

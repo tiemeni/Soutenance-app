@@ -10,13 +10,10 @@ const Products = () => {
     const products = useSelector(state => state.product);
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
-
     const hommeProds = useSelector(state => state.hommeProducts.hommeProds)
     const showHom = useSelector(state => state.hommeProducts.showHomme)
-
     const femmeProds = useSelector(state => state.femmeProducts.femmeProds)
     const showFem = useSelector(state => state.femmeProducts.showFemme)
-    
     const timer = useRef();
     const valFilter = useSelector(state => state.hommeProducts.valForFilter)
     const filtered = products ? Array.from(products).filter(prod => {

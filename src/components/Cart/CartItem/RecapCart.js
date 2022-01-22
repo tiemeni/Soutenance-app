@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 const RecapCart = ({ subTotal, setOpen }) => {
     const fraisLiv = 0;
-    const cartDetails = useSelector(state => state.cart);
+    const panel = useSelector(state => state.userPanel)
 
     return (
         <div
@@ -48,7 +48,7 @@ const RecapCart = ({ subTotal, setOpen }) => {
                 id="secondPayment"
                 variant="contained"
                 onClick={() => setOpen(true)}
-                disabled={cartDetails.length <= 0 ? true : false}>
+                disabled={panel.length <= 0 ? true : false}>
                 Paiement
             </Button>
         </div>

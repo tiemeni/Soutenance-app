@@ -32,7 +32,7 @@ const Login = ({ setLogin, setRegister, setOpen, setIsLogged }) => {
             const results = await fetch("http://localhost:4000/api/users/login", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                credentials : 'include',
+                credentials: 'include',
                 body: JSON.stringify({
                     email_address: email,
                     password: password
@@ -42,7 +42,7 @@ const Login = ({ setLogin, setRegister, setOpen, setIsLogged }) => {
                 timer.current = window.setTimeout(() => {
                     setIsLoading(false);
                     setIncorrect(true);
-                    setError("Identifiants invalide, veuillez réessauer.");
+                    setError("Identifiants invalides, veuillez réessayer.");
                 }, 1000);
             }
 

@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
-import './components/App.css';
-import { createStore } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducers from './reducers';
+import thunk from 'redux-thunk'
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#000000" // This is an orange looking color
+      main: "#000000" 
     },
     secondary: {
       main: '#f44336',
@@ -23,17 +23,21 @@ const theme = createTheme({
     ].join(','),
   },
 });
+let composer = compose(applyMiddleware(thunk),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 let store = createStore(
-  reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  reducers, composer
 );
 
 ReactDOM.render(
+  <React.StrictMode>
   <ThemeProvider theme={theme}>
     <Provider store={store}>
       <App />
     </Provider>
-  </ThemeProvider >,
+  </ThemeProvider >
+  </React.StrictMode>
+  ,
   document.getElementById('root')
 );

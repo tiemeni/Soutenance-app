@@ -1,11 +1,11 @@
 import React,
-{ useRef, useState }
+{
+    useRef, useState
+}
     from 'react';
 import {
     Badge,
-    Collapse,
     InputAdornment,
-    Slide,
     Snackbar,
     TextField
 } from '@material-ui/core';
@@ -25,20 +25,16 @@ import {
     showForFemme,
     showForHomme,
     storeFemmeProducts,
-    storeHommeProducts,
-    storeProduct
+    storeHommeProducts
 } from '../../actions';
-import Register from '../Auth/Register'; 
 import Cookies from 'js-cookie';
 
 const AppSideBar = ({ setIsLogged, setOpen, open }) => {
-    const cartDetails = useSelector(state => state.cart);
-    const userDetails = useSelector(state => state.user);
     const products = useSelector(state => state.product);
     const dispatch = useDispatch();
     const [loggedIn, setLoggedIn] = useState(true);
-    const timer = useRef();
-    const showHom = useSelector(state => state.hommeProducts.showHomme)
+    const size = useSelector(state => state.panier)
+    const taill = useSelector(state => state.userPanel).length
     const actualUser = useSelector(state => state.ActualUser.actualuser)
     const handleClickOpen = () => {
         setOpen(true);
@@ -47,7 +43,7 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
         Cookies.remove('jwt')
         window.location = '/'
     }
-    const sortByHomme = (e) => {
+    const sortByHomme = () => {
         const results = Array.from(products)
             .filter(product => product.description === "Chaussure de basketball");
         dispatch(storeHommeProducts(results))
@@ -187,7 +183,7 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
                             <FavoriteBorderOutlined />
                         </Badge>
                         <Badge
-                            badgeContent={cartDetails.length}
+                            badgeContent={taill ? taill : size}
                             className="icon-bag"
                             color="secondary">
                             <Link

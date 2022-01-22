@@ -1,11 +1,11 @@
-// Users
+
 export const storeUser = (user) => {
     return {
         type: 'STORE_USER',
         payload: user
     };
 }
-// Products
+
 export const storeProduct = (products) => {
     return {
         type: 'STORE_PRODUCT',
@@ -46,7 +46,7 @@ export const setFilter = (value) => {
         payload: value
     }
 }
-// Cart
+
 export const storeCart = (cart) => {
     return {
         type: 'STORE_CART',
@@ -63,7 +63,33 @@ export const addProduct = (cart) => {
 
 export const setActualUser = (user) => {
     return {
-        type : 'ACTUAL_USER',
-        payload : user
+        type: 'ACTUAL_USER',
+        payload: user
+    }
+}
+
+export const ajouterPanier = (user_produit) => {
+    return {
+        type: "STORE_USER_PANEL",
+        payload: user_produit
+    }
+}
+
+export const increasePanel = () => {
+    return {
+        type: 'INCREASE_PANEL'
+    }
+}
+
+export const decreasePanel = () => {
+    return {
+        type: 'DECREASE_PANEL'
+    }
+}
+
+export const deletFromPanel = (id, qte) => {
+    return {
+        type: "DELETE_USER",
+        payload : {id, qte}
     }
 }

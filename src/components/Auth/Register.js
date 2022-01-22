@@ -14,23 +14,23 @@ const Register = ({ setLogin, setRegister }) => {
         e.preventDefault()
         const data = {
             first_name: nom,
-            last_name : prenom,
-            email_address : email,
+            last_name: prenom,
+            email_address: email,
             password,
-            isAdmin : true
+            isAdmin: true
         }
-        
+
         fetch("http://localhost:4000/api/users/register", {
-            method : "POST",
-            headers : {
-                'Content-type' : 'application/json'
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
             },
-            credentials : 'include',
-            body : JSON.stringify(data)
+            credentials: 'include',
+            body: JSON.stringify(data)
         })
-        .then(data => data.json())
-        .then(user => console.log(user))
-        .catch(err => console.log(err))
+            .then(data => data.json())
+            .then(user => console.log(user))
+            .catch(err => console.log(err))
     }
 
     return (

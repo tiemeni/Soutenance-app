@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-    Button,
     CircularProgress,
     Collapse,
     Dialog,
@@ -14,20 +13,23 @@ import {
     ListItemText,
     Snackbar
 } from '@material-ui/core';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
 import {
     ExpandLess,
     ExpandMore,
     FavoriteBorderOutlined,
-    Star,
-    StarBorder
+    Star
 } from '@material-ui/icons';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import { storeCart } from '../../actions';
-import Products from './Products';
+import { ajouterPanier, increasePanel } from '../../actions';
 
-const ProductDetails = ({ fetchProducts }) => {
+const ProductDetails = () => {
     const [openLiv, setOpenLiv] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
     const [openAvis, setOpenAvis] = useState(false);
@@ -36,64 +38,57 @@ const ProductDetails = ({ fetchProducts }) => {
     const [product, setProduct] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [isClicked, setIsClicked] = useState(false);
-    const [size, setSize] = useState();
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
     const dispatch = useDispatch();
     const timer = useRef();
     const array = [0, 1, 2, 3, 4];
-
-    const myHeader = {
-        'Content-Type': 'application/json',
-        'x-access-token': userInfos.token
+    const [taille, setTaille] = useState(40);
+    const [qte, setQte] = useState(1)
+    const [open, setOpen] = React.useState(false);
+    const [openQte, setOpenQte] = React.useState(false);
+    const handleChange = (event) => {
+        setTaille(event.target.value);
+    };
+    const handleChangeQte = e => {
+        setQte(e.target.value)
     }
+    const handleCloseSize = () => {
+        setOpen(false);
+    };
+    const handleCloseSizeQte = () => {
+        setOpenQte(false);
+    };
+    const handleOpenQte = () => {
+        setOpenQte(true);
+    };
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
     const handleClick = () => {
         setOpenLiv(!openLiv);
     };
-
     const handleClose = () => {
         setSuccess(false);
-        setOpenDialog(false);
     }
-
-    const chooseSize = (e) => {
-        setSize(43);
-        if (e.target.className == "active") {
-            e.target.className = "size-c";
-        } else {
-            e.target.className = "active";
-        }
-    }
-
-    console.log("Taille: ", size);
-
     const addToCart = async () => {
-        setIsClicked(true);
-        if (size == undefined) {
+        window.setTimeout(() => {
+            setSuccess(true);
+        }, 1000)
+        if (taille === undefined) {
             setError(true);
             setIsClicked(false);
         } else {
             setError(false);
-            try {
-                const results = await fetch("http://localhost:4000/api/cart", {
-                    method: "POST",
-                    headers: myHeader,
-                    credentials: 'include',
-                    body: JSON.stringify({
-                        id_produit: productId,
-                        qte_produit: 1
-                    })
-                });
-                const data = await results.json();
-                timer.current = window.setTimeout(() => {
-                    setIsClicked(false);
-                    setSuccess(true);
-                    fetchProducts();
-                }, 500)
-            } catch (err) {
-                console.log(err);
+
+            const userProd = {
+                productId,
+                qte,
+                taille
             }
+            dispatch(ajouterPanier(userProd))
+            dispatch(increasePanel())
         }
     }
 
@@ -114,6 +109,10 @@ const ProductDetails = ({ fetchProducts }) => {
 
         getProductById();
     }, [])
+
+
+
+
 
     return (
         <div className="content-body">
@@ -180,22 +179,61 @@ const ProductDetails = ({ fetchProducts }) => {
                             {product.prix_unitaire} Fcfa
                         </p>
                         <div className="button-div">
-                            <h4>Taille: </h4>
+                            <h4>Choisir une taille: </h4>
                             {error && <p style={{ "color": "red", "marginTop": "5px" }}>
                                 Vous devez choisir une taille pour continuer.
                             </p>}
-                            <div className="choose-size">
-                                <div className="size-c" onClick={chooseSize}>45</div>
-                                <div className="size-c" onClick={chooseSize}>44</div>
-                                <div className="size-c" onClick={chooseSize}>43.5</div>
-                                <div className="size-c" onClick={chooseSize}>43</div>
-                                <div className="size-c" onClick={chooseSize}>42</div>
-                                <div className="size-c" onClick={chooseSize}>41</div>
-                                <div className="size-c" onClick={chooseSize}>40.5</div>
-                                <div className="size-c" onClick={chooseSize}>40</div>
-                                <div className="size-c" onClick={chooseSize}>39</div>
-                                <div className="size-c" onClick={chooseSize}>38.5</div>
-                                <div className="size-c" onClick={chooseSize}>37</div>
+                            <div>
+                                <FormControl sx={{ m: 1, minWidth: 120, width: "400px", marginBottom: "30px" }}>
+                                    <InputLabel id="demo-controlled-open-select-label">Taille</InputLabel>
+                                    <Select
+                                        labelId="demo-controlled-open-select-label"
+                                        id="demo-controlled-open-select"
+                                        open={open}
+                                        onClose={handleCloseSize}
+                                        onOpen={handleOpen}
+                                        value={taille}
+                                        label="Taille"
+                                        onChange={handleChange}
+                                    >
+                                        <MenuItem value={45}>45</MenuItem>
+                                        <MenuItem value={44}>44</MenuItem>
+                                        <MenuItem value={43.5}>43.5</MenuItem>
+                                        <MenuItem value={43}>43</MenuItem>
+                                        <MenuItem value={42}>42</MenuItem>
+                                        <MenuItem value={41}>41</MenuItem>
+                                        <MenuItem value={40.5}>40.5</MenuItem>
+                                        <MenuItem value={40}>40</MenuItem>
+                                        <MenuItem value={39}>39</MenuItem>
+                                        <MenuItem value={38.5}>38.5</MenuItem>
+                                        <MenuItem value={37}>37</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <FormControl sx={{ m: 1, minWidth: 120, width: "400px", marginBottom: "40px" }}>
+                                    <InputLabel id="demo-controlled-open-select-label">Quantité</InputLabel>
+                                    <Select
+                                        labelId="demo-controlled-open-select-label"
+                                        id="demo-controlled-open-select"
+                                        open={openQte}
+                                        onClose={handleCloseSizeQte}
+                                        onOpen={handleOpenQte}
+                                        value={qte}
+                                        label="Quantité"
+                                        onChange={handleChangeQte}
+                                    >
+                                        <MenuItem value={1}>1</MenuItem>
+                                        <MenuItem value={2}>2</MenuItem>
+                                        <MenuItem value={3}>3</MenuItem>
+                                        <MenuItem value={4}>4</MenuItem>
+                                        <MenuItem value={5}>5</MenuItem>
+                                        <MenuItem value={6}>6</MenuItem>
+                                        <MenuItem value={7}>7</MenuItem>
+                                        <MenuItem value={8}>8</MenuItem>
+                                        <MenuItem value={9}>9</MenuItem>
+                                        <MenuItem value={10}>10</MenuItem>
+                                        <MenuItem value={11}>11</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </div>
                             <Button id="payment"
                                 className="panier"
