@@ -28,6 +28,7 @@ import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { ajouterPanier, increasePanel } from '../../actions';
+import SkeletonDetails from '../SkeletonDetails';
 
 const ProductDetails = () => {
     const [openLiv, setOpenLiv] = useState(false);
@@ -117,10 +118,7 @@ const ProductDetails = () => {
     return (
         <div className="content-body">
             {isLoading ?
-                <div className="loading-product">
-                    <CircularProgress id="circular-progress" />
-                    <h4>Chargements...</h4>
-                </div>
+                <SkeletonDetails />
                 :
                 <div className="details-produit">
                     <Snackbar

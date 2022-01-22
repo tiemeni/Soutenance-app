@@ -1,7 +1,7 @@
 
 
 var result = []
-var result_ = []
+var result_delete = []
 
 const userPanel = (state = [], action) => {
     if (action.type === 'STORE_USER_PANEL') {
@@ -14,8 +14,8 @@ const userPanel = (state = [], action) => {
             return state
         }
     } else if (action.type === "DELETE_USER") {
-        del(state, action.payload)
-        return result_
+        del(state, action.payload.id, action.payload.taille)
+        return result_delete
     } else {
         return state;
     }
@@ -36,22 +36,18 @@ const isIn = (tab, element, size) => {
     }
 }
 
-const del = (tab, element) => {
-    if(tab.length === 0){
-        
-    }else{
-        for(var i = 0; i < tab.length ; i++){
-            console.log(tab[i].productId)
-            console.log(element.id)
-            console.log(tab[i].taille)
-            console.log(element.taille)
-            if(tab[i].productId !== element.id && tab[i].taille !== element.taille){
-                result_.push(tab[i])
-            }else{
-                
+const del = (tab, id, taille) => {
+    result_delete = []
+    if (tab.length === 0) {
+
+    } else {
+        for (var i = 0; i < tab.length; i++) {
+            if (tab[i].productId === id && tab[i].taille === taille) {
+                continue
+            } else {
+                result_delete.push(tab[i])
             }
         }
-        
     }
 }
 

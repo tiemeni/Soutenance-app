@@ -87,9 +87,9 @@ export const decreasePanel = () => {
     }
 }
 
-export const deletFromPanel = (id, qte) => {
+export const deletFromPanel = (id, taille) => {
     return {
         type: "DELETE_USER",
-        payload : {id, qte}
+        payload : {id, taille}
     }
 }

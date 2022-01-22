@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Product from './product/Product';
-import { CircularProgress } from '@material-ui/core';
 import { storeProduct } from '../../actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { display } from '@mui/system';
+import SkeletonHome from '../skeletonHome';
 
 
 const Products = () => {
@@ -26,28 +27,24 @@ const Products = () => {
     }) : ""
 
     useEffect(() => {
-        try {
-            const fetchProducts = async () => {
-                const results = await fetch('http://localhost:4000/api/products');
-                const data = await results.json();
-                timer.current = window.setTimeout(() => {
+        const fetchProducts = () => {
+            fetch('http://localhost:4000/api/products')
+                .then(data => data.json())
+                .then(result => {
                     setIsLoading(false);
-                    dispatch(storeProduct(data));
-                }, 200);
-            }
-            fetchProducts();
-        } catch (err) {
-            console.log(err);
+                    dispatch(storeProduct(result));
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }
+        fetchProducts();
     }, [])
 
     return (
         <div className="content-body">
             {isLoading ?
-                <div className="loading-product">
-                    <CircularProgress id="circular-progress" />
-                    <h4>Chargements...</h4>
-                </div>
+                <SkeletonHome />
                 : showHom && !filtered ? Array.from(hommeProds).map((product) =>
                     <Product key={product._id} product={product} />
                 ) : showHom && filtered ? (Array.from(hommeProds).filter(prod => {
@@ -77,7 +74,7 @@ const Products = () => {
                             : products.map((product) =>
                                 <Product key={product._id} product={product} />)
             }
-        </div>
+        </div >
     )
 }
 
