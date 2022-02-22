@@ -7,6 +7,8 @@ import hommeProducts from "./homeProducts";
 import femmeProducts from "./femmeProducts";
 import userPanel from "./userPanel";
 import panier from './panier'
+import panelForPay from './panelForPay'
+import IsDelFromPanel from './IsDelFromPanel'
 
 const reducers = combineReducers({
     cart: cartReducer,
@@ -16,7 +18,9 @@ const reducers = combineReducers({
     femmeProducts,
     ActualUser,
     userPanel,
-    panier
+    panier,
+    IsDelFromPanel,
+    panelForPay
 });
 
 export default reducers;

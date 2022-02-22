@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from "@material-ui/core";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#000000" 
+      main: "#000000"
     },
     secondary: {
       main: '#f44336',
@@ -31,13 +31,11 @@ let store = createStore(
 );
 
 ReactDOM.render(
-  <React.StrictMode>
   <ThemeProvider theme={theme}>
     <Provider store={store}>
       <App />
     </Provider>
   </ThemeProvider >
-  </React.StrictMode>
   ,
   document.getElementById('root')
 );

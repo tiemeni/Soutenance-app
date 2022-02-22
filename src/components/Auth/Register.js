@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
-import { TextField, Button, Radio, FormControlLabel } from '@material-ui/core';
+import {
+    TextField,
+    Button,
+    Radio,
+    FormControlLabel
+} from '@material-ui/core';
 
-const Register = ({ setLogin, setRegister }) => {
+const Register = ({
+    setLogin,
+    setRegister
+}) => {
 
     const [genreHomme, setGenreHomme] = useState(true)
     const [genreFemme, setGenreFemme] = useState(false)

@@ -1,10 +1,15 @@
 import { Divider } from '@material-ui/core';
-import { Instagram, Twitter, WhatsApp, YouTube } from '@material-ui/icons';
+import {
+    Instagram,
+    Twitter,
+    WhatsApp,
+    YouTube
+} from '@material-ui/icons';
 import React from 'react';
 
 const Footer = () => {
     return (
-        <div className="content-footer">
+        <div className="content-footer" style={{}}>
             <div className="content-footer-top">
                 <div className="footer-box">
                     <div className="footer-box-left">

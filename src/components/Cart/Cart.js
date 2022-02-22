@@ -3,13 +3,21 @@ import { Timer, ArrowBackIosOutlined } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem/CartItem';
 import RecapCart from './CartItem/RecapCart';
+import Stack from '@mui/material/Stack';
+import SnackbarContent from '@mui/material/SnackbarContent';
 import { useSelector } from 'react-redux';
-import StripeContainer from '../Payment/StripeContainer';
-
+import StripeContainer from '../Payment/StripeContainer'
+import { Button } from '@mui/material';
 
 const ShoppingCart = ({ total, success, setSuccess, fetchProducts, cartId }) => {
     const [open, setOpen] = useState(false);
+    const isdelet = useSelector(state => state.IsDelFromPanel)
     const panel = useSelector(state => state.userPanel)
+    const action = (
+        <Button color="secondary" size="small">
+            x
+        </Button>
+    );
 
     return (
         <div className="container">

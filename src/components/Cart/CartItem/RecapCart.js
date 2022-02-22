@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Divider, Button } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import { processTotalPrice } from '../../../utils';
 
 const RecapCart = ({ subTotal, setOpen }) => {
+    const amount = useSelector(state => state.panelForPay.amount)
     const fraisLiv = 0;
     const panel = useSelector(state => state.userPanel)
+
+
 
     return (
         <div
@@ -19,7 +23,7 @@ const RecapCart = ({ subTotal, setOpen }) => {
                     Sous Total
                 </p>
                 <p>
-                    {subTotal} Fcfa
+                    {amount} Fcfa
                 </p>
             </div>
             <div>
@@ -38,7 +42,7 @@ const RecapCart = ({ subTotal, setOpen }) => {
                 </p>
                 <p
                     style={{ fontWeight: "bold" }} >
-                    {subTotal} Fcfa
+                    {amount + fraisLiv} Fcfa
                 </p>
             </div>
             <Divider
@@ -51,6 +55,7 @@ const RecapCart = ({ subTotal, setOpen }) => {
                 disabled={panel.length <= 0 ? true : false}>
                 Paiement
             </Button>
+
         </div>
     )
 }

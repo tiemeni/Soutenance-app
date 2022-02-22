@@ -1,13 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React,
+{
+    useEffect,
+    useRef,
+    useState
+} from 'react';
 import Product from './product/Product';
 import { storeProduct } from '../../actions';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+    useDispatch,
+    useSelector
+} from 'react-redux';
 import { display } from '@mui/system';
 import SkeletonHome from '../skeletonHome';
+import NoResultComp from '../NoResultComp'
 
 
 const Products = () => {
-
     const products = useSelector(state => state.product);
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +23,7 @@ const Products = () => {
     const showHom = useSelector(state => state.hommeProducts.showHomme)
     const femmeProds = useSelector(state => state.femmeProducts.femmeProds)
     const showFem = useSelector(state => state.femmeProducts.showFemme)
-    const timer = useRef();
+    const notFound = useSelector(state => state.hommeProducts.notFound)
     const valFilter = useSelector(state => state.hommeProducts.valForFilter)
     const filtered = products ? Array.from(products).filter(prod => {
         if (prod) {
@@ -27,25 +35,31 @@ const Products = () => {
     }) : ""
 
     useEffect(() => {
-        const fetchProducts = () => {
-            fetch('http://localhost:4000/api/products')
-                .then(data => data.json())
-                .then(result => {
-                    setIsLoading(false);
-                    dispatch(storeProduct(result));
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+        if (products.length > 0) {
+            setIsLoading(false);
+        } else {
+            const fetchProducts = () => {
+                fetch('http://localhost:4000/api/products')
+                    .then(data => data.json())
+                    .then(result => {
+                        setIsLoading(false);
+                        dispatch(storeProduct(result));
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            }
+            fetchProducts();
         }
-        fetchProducts();
-    }, [])
+    }, [products])
 
     return (
         <div className="content-body">
+            {notFound && !isLoading ?
+                <NoResultComp /> : ""}
             {isLoading ?
                 <SkeletonHome />
-                : showHom && !filtered ? Array.from(hommeProds).map((product) =>
+                : showHom && !filtered && !isLoading ? Array.from(hommeProds).map((product) =>
                     <Product key={product._id} product={product} />
                 ) : showHom && filtered ? (Array.from(hommeProds).filter(prod => {
                     if (prod) {

@@ -90,6 +90,34 @@ export const decreasePanel = () => {
 export const deletFromPanel = (id, taille) => {
     return {
         type: "DELETE_USER",
-        payload : {id, taille}
+        payload: { id, taille }
+    }
+}
+
+export const setNotFound = (v) => {
+    return {
+        type: 'SET_NOT_FOUND',
+        v
+    }
+}
+
+export const setIsDeleted = (v) => {
+    return {
+        type: 'IS_DELETED',
+        v
+    }
+}
+
+export const setPanelForPay = (panel) => {
+    return {
+        type: "SET_PANEL_FOR_PAY",
+        panel
+    }
+}
+
+export const processAmount = (amount) => {
+    return {
+        type: 'PROCESS_AMOUNT',
+        amount
     }
 }

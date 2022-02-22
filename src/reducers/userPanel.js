@@ -1,5 +1,6 @@
 
 
+
 var result = []
 var result_delete = []
 
@@ -35,7 +36,6 @@ const isIn = (tab, element, size) => {
         }
     }
 }
-
 const del = (tab, id, taille) => {
     result_delete = []
     if (tab.length === 0) {

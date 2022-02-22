@@ -1,11 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React,
+{
+    useState,
+    useEffect
+} from 'react';
 import './App.css';
 import AppSideBar from './AppBar/AppSideBar';
-import { setActualUser } from '../actions/'
+import {
+    setActualUser,
+    storeProduct
+} from '../actions/'
 import ShoppingCart from './Cart/Cart';
 import Footer from './Content/AppFooter';
 import AppContent from './Content/AppContent';
-import { useDispatch } from 'react-redux';
+import {
+    useDispatch,
+    useSelector
+} from 'react-redux';
 import {
     BrowserRouter as Router,
     Switch,
@@ -19,6 +29,23 @@ function App() {
     const [total, setTotal] = useState();
     const [cartId, setCardId] = useState();
     const dispatch = useDispatch();
+    const actualUser = useSelector(state => state.ActualUser.actualuser)
+    const product = useSelector(state => state.product)
+
+    const fetchProds = () => {
+        if (actualUser) {
+
+        } else {
+            fetch('http://localhost:4000/api/products')
+                .then(data => data.json())
+                .then(result => {
+                    dispatch(storeProduct(result));
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+    }
 
     const fetchProducts = async () => {
         fetch('http://localhost:4000/jwt', {
@@ -29,21 +56,28 @@ function App() {
                 dispatch(setActualUser(user))
             })
             .catch(err => console.log(err))
-        }
+    }
 
     const getProducts = async () => {
-        try {
-            const results = await fetch('http://localhost:4000/api/products');
-            const data = await results.json();
-            //dispatch(storeProduct(data));
-        } catch (err) {
-            console.log(err);
+        if (product) {
+            console.log('product has loaded ...')
+        } else {
+            console.log('product has not loaded ...')
+            try {
+                const results = await fetch('http://localhost:4000/api/products');
+                const data = await results.json();
+                //dispatch(storeProduct(data));
+            } catch (err) {
+                console.log(err);
+            }
         }
     }
 
     useEffect(() => {
+        // dispatch(setNotFound(false))
         try {
-            fetchProducts();
+            fetchProducts()
+            fetchProds()
         } catch (err) {
             console.log(err);
         }
@@ -53,18 +87,30 @@ function App() {
         <Router >
             <div className="app" >
                 <header className="app-header" >
-                    <AppSideBar setIsLogged={setIsLogged} getProducts={getProducts} setOpen={setOpen} open={open} />
+                    <AppSideBar
+                        setIsLogged={setIsLogged}
+                        getProducts={getProducts}
+                        setOpen={setOpen}
+                        open={open} />
                 </header>
                 <div className="app-content" >
                     <Switch >
                         <Route exact path='/' >
                             <AppContent />
                         </Route>
-                        <Route exact path="/product/:productId" >
-                            <ProductDetails fetchProducts={fetchProducts} setOpen={setOpen} />
+                        <Route exact
+                            path="/product/:productId" >
+                            <ProductDetails
+                                fetchProducts={fetchProducts}
+                                setOpen={setOpen} />
                         </Route>
-                        <Route path='/shopping-cart' >
-                            <ShoppingCart setTotal={setTotal} total={total} fetchProducts={fetchProducts} cartId={cartId} />
+                        <Route
+                            path='/shopping-cart' >
+                            <ShoppingCart
+                                setTotal={setTotal}
+                                total={total}
+                                fetchProducts={fetchProducts}
+                                cartId={cartId} />
                         </Route>
                     </Switch>
                 </div>
@@ -73,6 +119,7 @@ function App() {
         </Router>
     );
 }
+
 
 
 export default App;

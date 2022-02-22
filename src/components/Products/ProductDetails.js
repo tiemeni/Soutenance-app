@@ -1,4 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+    useEffect,
+    useRef,
+    useState
+} from 'react';
 import {
     CircularProgress,
     Collapse,
@@ -25,17 +29,29 @@ import {
     Star
 } from '@material-ui/icons';
 import { useParams } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import { ajouterPanier, increasePanel } from '../../actions';
-import SkeletonDetails from '../SkeletonDetails';
+import {
+    useDispatch,
+    useSelector
+} from 'react-redux';
+import {
+    Alert,
+    AlertTitle
+} from '@material-ui/lab';
+import {
+    ajouterPanier,
+    increasePanel,
+    processAmount
+} from '../../actions';
 
 const ProductDetails = () => {
+    const products = useSelector(state => state.product)
     const [openLiv, setOpenLiv] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
     const [openAvis, setOpenAvis] = useState(false);
     const userInfos = useSelector(state => state.user);
     const { productId } = useParams();
+    const sProduct = products ?
+        Array.from(products).filter(element => element._id === productId)[0] : null
     const [product, setProduct] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [isClicked, setIsClicked] = useState(false);
@@ -88,37 +104,42 @@ const ProductDetails = () => {
                 qte,
                 taille
             }
+            const specProd = products.filter(prod => prod._id === productId)[0]
+            dispatch(processAmount(specProd.prix_unitaire * qte))
             dispatch(ajouterPanier(userProd))
             dispatch(increasePanel())
         }
     }
 
     useEffect(() => {
-        const getProductById = async () => {
-            try {
-                const results = await fetch('http://localhost:4000/api/products/' + productId);
-                const data = await results.json();
-
-                setProduct(data);
-                timer.current = window.setTimeout(() => {
-                    setIsLoading(false);
-                }, 200);
-            } catch (err) {
-                console.log(err);
+        if (sProduct) {
+            setIsLoading(false)
+        } else {
+            const getProductById = async () => {
+                try {
+                    const results = await fetch('http://localhost:4000/api/products/' + productId);
+                    const data = await results.json();
+                    setProduct(data);
+                    timer.current = window.setTimeout(() => {
+                        setIsLoading(false);
+                    }, 200);
+                } catch (err) {
+                    console.log(err);
+                }
+                getProductById();
             }
         }
+    }, [products])
 
-        getProductById();
-    }, [])
-
-
-
-
+    const tabTaille = [45, 44, 43.5, 43, 42, 41, 40.5, 40, 39, 38.5, 37]
 
     return (
         <div className="content-body">
             {isLoading ?
-                <SkeletonDetails />
+                <div className="loading-product">
+                    <CircularProgress id="circular-progress" />
+                    <h4>Chargements...</h4>
+                </div>
                 :
                 <div className="details-produit">
                     <Snackbar
@@ -127,11 +148,14 @@ const ProductDetails = () => {
                         autoHideDuration={8000}
                         onClose={handleClose}>
                         <Alert
-                            onClose={handleClose} severity="success">
+                            onClose={handleClose}
+                            severity="success">
                             <AlertTitle>
                                 Succès
                             </AlertTitle>
-                            La <strong>{product.nom_produit}</strong>
+                            La <strong>
+                                {sProduct.nom_produit}
+                            </strong>
                             a été ajouté à votre panier.
                         </Alert>
                     </Snackbar>
@@ -139,54 +163,67 @@ const ProductDetails = () => {
                         <div className="image-item"
                             style={{ marginRight: "15px" }}>
                             <img
-                                src={product.description_img1}
+                                src={sProduct.description_img1}
                                 alt="nike" />
                         </div>
                         <div
                             className="image-item">
                             <img
-                                src={product.description_img2} />
+                                src={sProduct.description_img2} />
                         </div>
                         <div
                             className="image-item"
                             style={{ marginRight: "15px" }}>
                             <img
-                                src={product.description_img3} />
+                                src={sProduct.description_img3} />
                         </div>
-                        <div
+                        {sProduct.description_img4 && <div
                             className="image-item">
-                            <img src={product.description_img4} />
-                        </div>
-                        <div className="image-item"
+                            <img src={sProduct.description_img4} />
+                        </div>}
+                        {sProduct.description_img4 && <div className="image-item"
                             style={{ marginRight: "15px" }}>
-                            <img src={product.description_img5} />
-                        </div>
-                        <div className="image-item">
-                            <img src={product.description_img6} />
-                        </div>
+                            <img src={sProduct.description_img5} />
+                        </div>}
+                        {sProduct.description_img6 && <div className="image-item">
+                            <img src={sProduct.description_img6} />
+                        </div>}
                     </div>
                     <div className="infos-produit">
                         <p id="category"
-                            className="category">{product.description}</p>
+                            className="category">
+                            {sProduct.description}
+                        </p>
                         <h1 id="product_name"
                             className="product_name">
-                            {product.nom_produit}
+                            {sProduct.nom_produit}
                         </h1>
                         <p id="prix-s"
                             style={{ marginBottom: "50px" }}>
-                            {product.prix_unitaire} Fcfa
+                            {sProduct.prix_unitaire} Fcfa
                         </p>
                         <div className="button-div">
                             <h4>Choisir une taille: </h4>
-                            {error && <p style={{ "color": "red", "marginTop": "5px" }}>
+                            {error && <p style={{
+                                "color": "red",
+                                "marginTop": "5px"
+                            }}>
                                 Vous devez choisir une taille pour continuer.
                             </p>}
                             <div>
-                                <FormControl sx={{ m: 1, minWidth: 120, width: "400px", marginBottom: "30px" }}>
-                                    <InputLabel id="demo-controlled-open-select-label">Taille</InputLabel>
+                                <FormControl sx={{
+                                    m: 1,
+                                    minWidth: 120,
+                                    width: "400px",
+                                    marginBottom: "30px"
+                                }}>
+                                    <InputLabel id="demo-controlled-open-select-label">
+                                        Taille
+                                    </InputLabel>
                                     <Select
                                         labelId="demo-controlled-open-select-label"
                                         id="demo-controlled-open-select"
+                                        style={{ width: "100%" }}
                                         open={open}
                                         onClose={handleCloseSize}
                                         onOpen={handleOpen}
@@ -194,17 +231,11 @@ const ProductDetails = () => {
                                         label="Taille"
                                         onChange={handleChange}
                                     >
-                                        <MenuItem value={45}>45</MenuItem>
-                                        <MenuItem value={44}>44</MenuItem>
-                                        <MenuItem value={43.5}>43.5</MenuItem>
-                                        <MenuItem value={43}>43</MenuItem>
-                                        <MenuItem value={42}>42</MenuItem>
-                                        <MenuItem value={41}>41</MenuItem>
-                                        <MenuItem value={40.5}>40.5</MenuItem>
-                                        <MenuItem value={40}>40</MenuItem>
-                                        <MenuItem value={39}>39</MenuItem>
-                                        <MenuItem value={38.5}>38.5</MenuItem>
-                                        <MenuItem value={37}>37</MenuItem>
+                                        {
+                                            tabTaille.map((el, i) => (
+                                                <MenuItem key={i} value={el}>{el}</MenuItem>
+                                            ))
+                                        }
                                     </Select>
                                 </FormControl>
                                 <FormControl sx={{ m: 1, minWidth: 120, width: "400px", marginBottom: "40px" }}>
@@ -219,17 +250,11 @@ const ProductDetails = () => {
                                         label="Quantité"
                                         onChange={handleChangeQte}
                                     >
-                                        <MenuItem value={1}>1</MenuItem>
-                                        <MenuItem value={2}>2</MenuItem>
-                                        <MenuItem value={3}>3</MenuItem>
-                                        <MenuItem value={4}>4</MenuItem>
-                                        <MenuItem value={5}>5</MenuItem>
-                                        <MenuItem value={6}>6</MenuItem>
-                                        <MenuItem value={7}>7</MenuItem>
-                                        <MenuItem value={8}>8</MenuItem>
-                                        <MenuItem value={9}>9</MenuItem>
-                                        <MenuItem value={10}>10</MenuItem>
-                                        <MenuItem value={11}>11</MenuItem>
+                                        {
+                                            tabTaille.map((el, i) => (
+                                                <MenuItem key={i} value={i + 1}>{i + 1}</MenuItem>
+                                            ))
+                                        }
                                     </Select>
                                 </FormControl>
                             </div>
@@ -238,7 +263,9 @@ const ProductDetails = () => {
                                 variant="contained"
                                 onClick={addToCart} >
                                 {isClicked ?
-                                    <CircularProgress style={{ color: "white" }} size={20} /> : "Ajouter au panier"}
+                                    <CircularProgress
+                                        style={{ color: "white" }}
+                                        size={20} /> : "Ajouter au panier"}
                             </Button>
                             <Button id="add-favorite"
                                 variant="contained"
@@ -247,7 +274,7 @@ const ProductDetails = () => {
                                 Ajouter au favoris
                             </Button>
                             <p id="details-description">
-                                Inspirée des trains à grande vitesse japonais, la {product.nom_produit} affiche un style fulgurant qui en met plein la vue.Elle reprend l'unité Nike Air révolutionnaire sur toute la longueur qui a bousculé le monde du running, et ajoute un coloris argenté pour vous permettre d'évoluer dans le plus grand confort.</p>
+                                Inspirée des trains à grande vitesse japonais, la {sProduct.nom_produit} affiche un style fulgurant qui en met plein la vue.Elle reprend l'unité Nike Air révolutionnaire sur toute la longueur qui a bousculé le monde du running, et ajoute un coloris argenté pour vous permettre d'évoluer dans le plus grand confort.</p>
                             <Divider />
                             <List>
                                 <ListItem id="list-item-button"
@@ -281,7 +308,7 @@ const ProductDetails = () => {
                                         <p>0 Étoiles </p>
                                     </div>
                                     <p>
-                                        Exprimez-vous. Soyez le premier à commenter {product.nom_produit}.
+                                        Exprimez-vous. Soyez le premier à commenter {sProduct.nom_produit}.
                                     </p>
                                     <p>
                                         <a href="#">Rédiger un avis</a>

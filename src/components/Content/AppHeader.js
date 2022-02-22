@@ -1,8 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import { setNotFound } from '../../actions';
 
 const AppHeader = () => {
-
+    const dispatch = useDispatch()
+    const [notFound, setNotFound_] = useState(false)
     const produits = useSelector(state => state.product)
     const isHomme = useSelector(state => state.hommeProducts.showHomme)
     const hommeProds = useSelector(state => state.hommeProducts.hommeProds)
@@ -52,10 +54,22 @@ const AppHeader = () => {
                         filteredLength : !isFemme && !(filteredLength > 0) ?
                             filteredLength : 0
 
+    dispatch(setNotFound(notFound))
+
+    useEffect(() => {
+        if (parenthese === 0) {
+            setNotFound_(true)
+        } else {
+            setNotFound_(false)
+        }
+    }, [parenthese, valFilter])
+
     return (
         <div className="content-header">
             <div className="header-left">
-                {isHomme ? "Chaussures pour hommes " : isFemme ? "Chaussures pour femmes" : "Tous les produits"}
+                {isHomme ? "Chaussures pour hommes "
+                    : isFemme ? "Chaussures pour femmes"
+                        : "Tous les produits"}
                 ({parenthese})
             </div>
             <div className="header-right">

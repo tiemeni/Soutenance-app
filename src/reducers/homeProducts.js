@@ -8,6 +8,8 @@ const hommeProducts = (state = [], action) => {
         return { ...state, hommeProds: action.payload }
     } else if (action.type === "SET_FILTER_VALUE") {
         return { ...state, valForFilter: action.payload }
+    } else if (action.type === 'SET_NOT_FOUND') {
+        return { ...state, notFound: action.v }
     } else {
         return state
     }

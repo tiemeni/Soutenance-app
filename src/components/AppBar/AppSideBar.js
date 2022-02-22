@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import {
+    processAmount,
     setFilter,
     showForFemme,
     showForHomme,
@@ -28,14 +29,16 @@ import {
     storeHommeProducts
 } from '../../actions';
 import Cookies from 'js-cookie';
+import { processTotalPrice } from '../../utils';
 
 const AppSideBar = ({ setIsLogged, setOpen, open }) => {
     const products = useSelector(state => state.product);
     const dispatch = useDispatch();
-    const [loggedIn, setLoggedIn] = useState(true);
+    const [loggedIn, setLoggedIn] = useState(false);
     const size = useSelector(state => state.panier)
     const taill = useSelector(state => state.userPanel).length
     const actualUser = useSelector(state => state.ActualUser.actualuser)
+    const forPay = useSelector(state => state.panelForPay.forPay)
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -74,13 +77,14 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
         setLoggedIn(false);
     }
 
+
     return (
         <div className="appbar">
             {actualUser &&
                 <Snackbar
                     anchorOrigin={{
                         vertical: 'bottom',
-                        horizontal: 'right'
+                        horizontal: 'left'
                     }}
                     open={loggedIn}
                     autoHideDuration={5000}
