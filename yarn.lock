@@ -1693,6 +1693,11 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
+"@salesforce-ux/design-system@^2.17.5":
+  version "2.17.5"
+  resolved "https://registry.yarnpkg.com/@salesforce-ux/design-system/-/design-system-2.17.5.tgz#f4d25d85e8f85970698941a076b344cb16cd57fd"
+  integrity sha512-vj1MgAeUHRbg3EeGQUR79QrgIoJI6U84IRCkRVnvgdBJs1iy3zb/chtz71/x4EVTfowY6+3gjR3hG11mJo1h3A==
+
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.3.tgz#3802ddd21a50a949b6721ddd72da36e67e7f1b2d"
