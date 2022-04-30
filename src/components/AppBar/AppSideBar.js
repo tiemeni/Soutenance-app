@@ -153,7 +153,7 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
               variant="dot"
               color={favorites.length > 0 ? "secondary" : "default"}
             >
-              <Link to="/favorite">
+              <Link to="/favorite" className="link-bag">
                 <FavoriteBorderOutlined />
               </Link>
             </Badge>
