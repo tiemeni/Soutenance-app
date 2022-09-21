@@ -19,7 +19,6 @@ import {
   storeHommeProducts,
 } from "../../actions";
 import Cookies from "js-cookie";
-//import { processTotalPrice } from '../../utils';
 
 const AppSideBar = ({ setIsLogged, setOpen, open }) => {
   const favorites = useSelector((state) => state.Favorite);
@@ -29,7 +28,6 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
   const size = useSelector((state) => state.panier);
   const taill = useSelector((state) => state.userPanel).length;
   const actualUser = useSelector((state) => state.ActualUser.actualuser);
-  //  const forPay = useSelector(state => state.panelForPay.forPay)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -47,7 +45,7 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
     //console.log(newResults)
   };
 
-  const sortByFemme = (e) => {
+  const sortByFemme = (_e) => {
     const results_ = Array.from(products).filter(
       (product) => product.description === "Chaussure pour homme"
     );
@@ -99,7 +97,6 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
             <strong>{actualUser ? actualUser.last_name : ""}</strong> !
           </div>
           <div>Aide</div>
-          {/*  <div style={{cursor : 'pointer'}}> Rejoignez-nous </div> */}
           <div onClick={!actualUser ? handleClickOpen : handleDisconnect}>
             {!actualUser ? "S'identifier" : "Se déconnecter"}
           </div>
@@ -123,9 +120,6 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
               Femme
             </Link>
           </div>
-          {/* <div>Hommes</div>
-                    <div>Femmes</div>
-                    <div>Enfants</div> */}
           <div>Promotion</div>
         </div>
         <div className="items-right">
@@ -177,7 +171,7 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
           <div className="covid-content">
             Covid: Informations concernant les magasins et livraisons
             <br />
-            <a href="#">En savoir plus</a>
+            <a href=" ">En savoir plus</a>
           </div>
           <div className="icon">
             <ArrowForwardIosOutlined />

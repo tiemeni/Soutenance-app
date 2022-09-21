@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { CircularProgress, Divider } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@mui/material";
 import { decreasePanel, deletFromPanel, setIsDeleted } from "../../../actions";
 
 const CartItem = ({ detail }) => {
@@ -33,7 +32,7 @@ const CartItem = ({ detail }) => {
       <div className="cart-product-details">
         <div className="img">
           <div className="small_image">
-            <img src={specProd ? specProd.image_url : "cool"} />
+            <img alt="" src={specProd ? specProd.image_url : "cool"} />
           </div>
           <div className="details">
             <p style={{ color: "black" }}>

@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Divider, Button } from "@material-ui/core";
 import { useSelector } from "react-redux";
-import { processTotalPrice } from "../../../utils";
 
-const RecapCart = ({ subTotal, setOpen }) => {
+const RecapCart = ({ _subTotal, setOpen }) => {
   const amount = useSelector((state) => state.panelForPay.amount);
   const fraisLiv = 0;
   const panel = useSelector((state) => state.userPanel);

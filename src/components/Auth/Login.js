@@ -13,7 +13,7 @@ const Login = ({ setLogin, setRegister, setOpen, setIsLogged }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState([]);
   const [incorrect, setIncorrect] = useState(false);
   const timer = useRef();
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ const Login = ({ setLogin, setRegister, setOpen, setIsLogged }) => {
         timer.current = window.setTimeout(() => {
           setIsLoading(false);
           setIncorrect(true);
-          setError("Identifiants invalides, veuillez réessayer.");
+          setError([...error, "Identifiants invalides, veuillez réessayer."]);
         }, 1000);
       }
 
@@ -63,8 +63,9 @@ const Login = ({ setLogin, setRegister, setOpen, setIsLogged }) => {
           setIsLogged(true);
         }, 500);
       }
-    } catch (error) {
-      console.log("Erreur: ", error);
+    } catch (_error) {
+      console.log("Erreur: ", _error);
+      setError([...error, _error])
     }
   };
 
@@ -78,7 +79,10 @@ const Login = ({ setLogin, setRegister, setOpen, setIsLogged }) => {
           REJOINDRE SNKRS
         </p>
         <Collapse in={incorrect}>
-          <Alert severity="error">{error}</Alert>
+          <Alert severity="error">
+            {error[0]}<br />
+            {error[1]}
+          </Alert>
         </Collapse>
       </div>
       <form className="login-form">

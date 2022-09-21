@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Product from "./product/Product";
 import { storeProduct } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
-import { display } from "@mui/system";
 import SkeletonHome from "../skeletonHome";
 import NoResultComp from "../NoResultComp";
 
 const Products = () => {
   const products = useSelector((state) => state.product);
+  console.log(products)
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const hommeProds = useSelector((state) => state.hommeProducts.hommeProds);
@@ -18,14 +18,12 @@ const Products = () => {
   const valFilter = useSelector((state) => state.hommeProducts.valForFilter);
   const filtered = products
     ? Array.from(products).filter((prod) => {
-        if (prod) {
-          return prod.nom_produit
-            .toUpperCase()
-            .includes(valFilter ? valFilter.toUpperCase() : " ");
-        } else {
-          return;
-        }
-      })
+      if (prod) {
+        return prod.nom_produit
+          .toUpperCase()
+          .includes(valFilter ? valFilter.toUpperCase() : " ");
+      }
+    })
     : "";
 
   useEffect(() => {
@@ -36,6 +34,7 @@ const Products = () => {
         fetch("http://localhost:4000/api/products")
           .then((data) => data.json())
           .then((result) => {
+            console.log(result)
             setIsLoading(false);
             dispatch(storeProduct(result));
           })

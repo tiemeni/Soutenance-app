@@ -5,7 +5,6 @@ import CartItem from "./CartItem/CartItem";
 import RecapCart from "./CartItem/RecapCart";
 import { useSelector } from "react-redux";
 import StripeContainer from "../Payment/StripeContainer";
-import { Button } from "@mui/material";
 
 const ShoppingCart = ({
   total,
@@ -15,13 +14,7 @@ const ShoppingCart = ({
   cartId,
 }) => {
   const [open, setOpen] = useState(false);
-  const isdelet = useSelector((state) => state.IsDelFromPanel);
   const panel = useSelector((state) => state.userPanel);
-  const action = (
-    <Button color="secondary" size="small">
-      x
-    </Button>
-  );
 
   return (
     <div className="container">
@@ -57,8 +50,8 @@ const ShoppingCart = ({
           <Timer style={{ marginRight: "20px" }} />
           <p>Plus que quelques exemplaires disponibles. Commandez vite.</p>
         </div>
-        <br />
-        <br />
+        <br/>
+        <br/>
       </div>
       <RecapCart subTotal={total} setOpen={setOpen} />
       <StripeContainer

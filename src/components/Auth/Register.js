@@ -35,7 +35,7 @@ const Register = ({ setLogin, setOpen, setRegister }) => {
         credentials: "include",
         body: JSON.stringify(data),
       })
-        .then((data) => data.json())
+        .then((_data) => _data.json())
         .then((json) => {
           console.log(json);
           if (json.error) {

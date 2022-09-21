@@ -41,7 +41,6 @@ const ProductDetails = () => {
   const [openLiv, setOpenLiv] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [openAvis, setOpenAvis] = useState(false);
-  const userInfos = useSelector((state) => state.user);
   const { productId } = useParams();
   const sProduct = products
     ? Array.from(products).filter((element) => element._id === productId)[0]
@@ -167,24 +166,24 @@ const ProductDetails = () => {
               <img src={sProduct.description_img1} alt="nike" />
             </div>
             <div className="image-item">
-              <img src={sProduct.description_img2} />
+              <img src={sProduct.description_img2} alt="" />
             </div>
             <div className="image-item" style={{ marginRight: "15px" }}>
-              <img src={sProduct.description_img3} />
+              <img src={sProduct.description_img3} alt="" />
             </div>
             {sProduct.description_img4 && (
               <div className="image-item">
-                <img src={sProduct.description_img4} />
+                <img src={sProduct.description_img4} alt="" />
               </div>
             )}
             {sProduct.description_img4 && (
               <div className="image-item" style={{ marginRight: "15px" }}>
-                <img src={sProduct.description_img5} />
+                <img src={sProduct.description_img5} alt="" />
               </div>
             )}
             {sProduct.description_img6 && (
               <div className="image-item">
-                <img src={sProduct.description_img6} />
+                <img src={sProduct.description_img6} alt="" />
               </div>
             )}
           </div>
@@ -261,7 +260,7 @@ const ProductDetails = () => {
                     label="Quantité"
                     onChange={handleChangeQte}
                   >
-                    {tabTaille.map((el, i) => (
+                    {tabTaille.map((_el, i) => (
                       <MenuItem key={i} value={i + 1}>
                         {i + 1}
                       </MenuItem>

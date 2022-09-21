@@ -2,26 +2,22 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
   Button,
-  Collapse,
   TextField,
-  Checkbox,
   IconButton,
   Typography,
-  Card,
   Snackbar,
 } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
-// import MuiDialogActions from '@material-ui/core/DialogActions';
 import { CircularProgress } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch, useSelector } from "react-redux";
 import InputMask from "react-input-mask";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { CardElement } from "@stripe/react-stripe-js";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { calculate } from "../../utils";
-import { setPanelForPay } from "../../actions";
+import { setPanelForPay, setToast } from "../../actions";
 
 const styles = (theme) => ({
   root: {
@@ -75,19 +71,10 @@ const DialogContent = withStyles((theme) => ({
   },
 }))(MuiDialogContent);
 
-// const DialogActions = withStyles((theme) => ({
-//     root: {
-//         margin: 0,
-//         padding: theme.spacing(1),
-//     },
-// }))(MuiDialogActions);
 
 export default function Payment({
   open,
-  setOpen,
-  subTotal,
-  fetchProducts,
-  cartId,
+  setOpen
 }) {
   const userDetails = useSelector((state) => state.ActualUser.actualuser);
   const [firstName, setFirstName] = useState(
@@ -110,9 +97,8 @@ export default function Payment({
   const allProds = useSelector((state) => state.product);
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const stripe = useStripe();
+  const [error, setError] = useState(undefined)
   const dispatch = useDispatch();
-  const elements = useElements();
 
   const handleClose = () => {
     setOpen(false);
@@ -146,6 +132,7 @@ export default function Payment({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(undefined)
     setIsLoading(true);
     const token = {
       firstName,
@@ -166,7 +153,7 @@ export default function Payment({
       body: JSON.stringify(data),
       credentials: "include",
     })
-      .then((data) => data.json())
+      .then((_data) => _data.json())
       .then((res) => {
         if (res.success) {
           setTimeout(() => {
@@ -179,9 +166,12 @@ export default function Payment({
               }, 2500);
             }, 500);
           }, 3000);
+        } else {
+          setError("Une Erreur est survenue lors du paiement ...");
+          setIsLoading(false)
         }
       })
-      .catch((err) => console.log);
+      .catch((_err) => console.log);
   };
 
   return (
@@ -284,19 +274,12 @@ export default function Payment({
                         value={phoneNumber}
                         onInput={(e) => handleChange(e)}
                       />
-                      {/* <TextField
-                                                    className="flex-box-item"
-                                                    id="password"
-                                                    placeholder="Numéro de téléphone"
-                                                    type="text"
-                                                    variant='outlined'
-                                                    value={userDetails.phone_number}
-                                                /> */}
                     </div>
                   </div>
                   <div className="normal-box payment-box">
                     <CardElement style={CARD_OPTIONS} />
                   </div>
+                  <span style={{ marginTop: "8px", color: "red" }}>{error}</span>
                   <br />
                   <div className="flex-end-box">
                     <div className="flex-end-box-item">

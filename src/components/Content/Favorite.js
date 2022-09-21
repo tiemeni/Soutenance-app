@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import ItemFavorite from "../ItemFavorite";
 import NoResultComp from "../NoResultComp";
@@ -6,13 +5,13 @@ import NoResultComp from "../NoResultComp";
 const Favorite = () => {
   const favorites = useSelector((state) => state.Favorite);
   const products = useSelector((state) => state.product);
-  for (var i = 0; i < favorites.length; i++) {
-    for (var j = 0; j < products.length; j++) {
-      if (favorites[i].productId === products[j]._id) {
-        favorites[i].nom = products[j].nom_produit;
-        favorites[i].description = products[j].description;
-        favorites[i].couleur = products[j].couleur_dispo;
-        favorites[i].image = products[j].image_url;
+  for (let fav of favorites) {
+    for (let prod of products) {
+      if (fav.productId === prod._id) {
+        fav.nom = prod.nom_produit;
+        fav.description = prod.description;
+        fav.couleur = prod.couleur_dispo;
+        fav.image = prod.image_url;
       }
     }
   }
