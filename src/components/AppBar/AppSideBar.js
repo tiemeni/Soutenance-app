@@ -42,7 +42,6 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
     dispatch(storeHommeProducts(results));
     dispatch(showForHomme(true));
     dispatch(showForFemme(false));
-    //console.log(newResults)
   };
 
   const sortByFemme = (_e) => {
@@ -67,6 +66,8 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
   const handleClose = () => {
     setLoggedIn(false);
   };
+
+  console.log('header', actualUser)
 
   return (
     <div className="appbar">
@@ -183,4 +184,4 @@ const AppSideBar = ({ setIsLogged, setOpen, open }) => {
   );
 };
 
-export default AppSideBar;
+export default React.memo(AppSideBar);

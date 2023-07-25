@@ -12,7 +12,6 @@ export const calculate = (array_, allProds) => {
 };
 
 export const processTotalPrice = (panel) => {
-  //console.log(panel)
   var total = 0;
   for (var j = 0; j < panel.length; j++) {
     total = total + panel[j].amount * panel[j].qte;

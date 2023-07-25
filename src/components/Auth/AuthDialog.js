@@ -53,7 +53,7 @@ const DialogContent = withStyles((theme) => ({
   },
 }))(MuiDialogContent);
 
-export default function Auth({ open, setOpen, setIsLogged }) {
+export default React.memo(function Auth({ open, setOpen, setIsLogged }) {
   const [login, setLogin] = useState(true);
   const [register, setRegister] = useState(false);
 
@@ -62,6 +62,8 @@ export default function Auth({ open, setOpen, setIsLogged }) {
     setRegister(false);
     setOpen(false);
   };
+
+  console.log('auth')
 
   return (
     <div>
@@ -98,4 +100,4 @@ export default function Auth({ open, setOpen, setIsLogged }) {
       </Dialog>
     </div>
   );
-}
+})

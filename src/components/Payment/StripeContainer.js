@@ -8,7 +8,7 @@ const PUBLIC_KEY =
 
 const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
-export default function StripeContainer({
+export default React.memo(function StripeContainer({
   open,
   setOpen,
   success,
@@ -18,7 +18,7 @@ export default function StripeContainer({
   cartId,
 }) {
   return (
-    <Elements stripe={stripeTestPromise}>
+    <Elements stripe={stripeTestPromise} >
       <Payment
         setOpen={setOpen}
         open={open}
@@ -30,4 +30,4 @@ export default function StripeContainer({
       />
     </Elements>
   );
-}
+})

@@ -72,7 +72,7 @@ const DialogContent = withStyles((theme) => ({
 }))(MuiDialogContent);
 
 
-export default function Payment({
+export default React.memo(function Payment({
   open,
   setOpen
 }) {
@@ -315,4 +315,4 @@ export default function Payment({
       </Dialog>
     </div>
   );
-}
+})

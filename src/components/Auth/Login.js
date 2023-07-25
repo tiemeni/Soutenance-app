@@ -35,7 +35,7 @@ const Login = ({ setLogin, setRegister, setOpen, setIsLogged }) => {
       const results = await fetch("http://localhost:4000/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
+        // credentials: "include",
         body: JSON.stringify({
           email_address: email,
           password: password,
@@ -64,7 +64,6 @@ const Login = ({ setLogin, setRegister, setOpen, setIsLogged }) => {
         }, 500);
       }
     } catch (_error) {
-      console.log("Erreur: ", _error);
       setError([...error, _error])
     }
   };

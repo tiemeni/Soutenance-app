@@ -7,7 +7,6 @@ import NoResultComp from "../NoResultComp";
 
 const Products = () => {
   const products = useSelector((state) => state.product);
-  console.log(products)
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const hommeProds = useSelector((state) => state.hommeProducts.hommeProds);
@@ -34,17 +33,17 @@ const Products = () => {
         fetch("http://localhost:4000/api/products")
           .then((data) => data.json())
           .then((result) => {
-            console.log(result)
             setIsLoading(false);
             dispatch(storeProduct(result));
           })
           .catch((err) => {
-            console.log(err);
           });
       };
       fetchProducts();
     }
-  }, [products]);
+  }, []);
+
+  console.log('products')
 
   return (
     <div className="content-body">
@@ -96,4 +95,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default React.memo(Products);

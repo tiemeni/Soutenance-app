@@ -30,34 +30,31 @@ function App() {
           dispatch(storeProduct(result));
         })
         .catch((err) => {
-          console.log(err);
         });
     }
   };
 
   const fetchProducts = async () => {
+    console.log('jwt auth call ...')
     fetch("http://localhost:4000/jwt", {
-      credentials: "include",
+      // credentials: "include",
     })
       .then((data) => data.json())
       .then((user) => {
-        console.log(user);
+        console.log(user)
         dispatch(setActualUser(user));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => { });
   };
 
   const getProducts = async () => {
     if (product) {
-      console.log("product has loaded ...");
     } else {
-      console.log("product has not loaded ...");
       try {
         const results = await fetch("http://localhost:4000/api/products");
         const data = await results.json();
         //dispatch(storeProduct(data));
       } catch (err) {
-        console.log(err);
       }
     }
   };
@@ -68,7 +65,6 @@ function App() {
       fetchProducts();
       fetchProds();
     } catch (err) {
-      console.log(err);
     }
   }, []);
 

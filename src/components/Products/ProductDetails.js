@@ -119,7 +119,6 @@ const ProductDetails = () => {
             setIsLoading(false);
           }, 200);
         } catch (err) {
-          console.log(err);
         }
         getProductById();
       };

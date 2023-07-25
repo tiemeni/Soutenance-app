@@ -37,7 +37,6 @@ const Register = ({ setLogin, setOpen, setRegister }) => {
       })
         .then((_data) => _data.json())
         .then((json) => {
-          console.log(json);
           if (json.error) {
             setIncorrect(true);
             setError(json.error);
@@ -52,7 +51,7 @@ const Register = ({ setLogin, setOpen, setRegister }) => {
             dispatch(setActualUser(json));
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {});
     } else {
       setIncorrect(true);
       setError("somme parameters are incorrects");
